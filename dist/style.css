@@ -358,3 +358,9 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 .cmp-huracan .comparison-photo{background-size:cover;background-position:center 62%}
 .cmp-huracan .comparison-photo.before{background-image:url('assets/huracan-before.webp')}
 .cmp-huracan .comparison-photo.after{background-image:url('assets/huracan-after.webp');background-position:center 62%}
+
+/* Garage car 3 (Daewoo Matiz) uses its own 16:9 photo instead of the sprite. */
+.garage-scene.scene-matiz{background-image:url('assets/garage-matiz.webp');background-size:cover;background-position:center 38%}
+/* Tablet: the garage stage's min-height + aspect-ratio forced it wider than the viewport. */
+@media(min-width:801px) and (max-width:1150px){.garage-stage{min-height:0;aspect-ratio:2.2}.garage-review{width:36%;top:13%;padding:18px}.garage-review blockquote{font-size:clamp(17px,2.1vw,24px);margin:12px 0 16px}}
+@media(min-width:601px) and (max-width:800px){.garage-scene.scene-matiz{width:100%;aspect-ratio:2.2;background-position:center 40%}}
