@@ -296,3 +296,15 @@ dialog .viz-copy .viz-kicker{margin:0;font-size:10px;font-weight:700;letter-spac
 .garage-bottom .link-cta.link-cta,.lab-consult .link-cta.link-cta{margin-top:0}
 @keyframes link-pulse{0%{box-shadow:0 0 0 0 #d4ff0099}70%,100%{box-shadow:0 0 0 7px #d4ff0000}}
 @media(prefers-reduced-motion:reduce){.link-cta.link-cta::before{animation:none}}
+
+/* Services block fits one screen on desktop: sizes follow viewport height as well as width. */
+@media(min-width:901px){
+.service-menu{padding-block:clamp(32px,5.5svh,80px)}
+.service-menu-head{margin-bottom:clamp(16px,2.8svh,45px)}
+.service-menu-head>p{margin-bottom:clamp(8px,1.4svh,20px)}
+.service-menu h2{font-size:clamp(38px,min(4.4vw,7.8svh),84px)}
+.service-options button{font-size:clamp(24px,min(3vw,5svh),45px);padding-block:clamp(11px,1.9svh,19px)}
+html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),43px)}
+.service-photo-stack{width:min(79%,calc(44svh * .72))}
+.service-showcase-copy{margin-top:clamp(12px,2.2svh,25px)}
+}
