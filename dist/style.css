@@ -205,3 +205,18 @@ h1{animation:reveal-up .9s var(--entrance) .12s backwards}
 @media(min-width:901px) and (max-width:1150px){.header-actions{gap:12px}.header-actions .call{font-size:11px}.main-nav a{padding-inline:12px}}
 @media(max-width:900px){.header-actions{grid-column:2;grid-row:1;gap:6px;flex-direction:column;align-items:flex-end}.header .header-actions .call{grid-column:auto;grid-row:auto;padding:3px 0 7px;font-size:11px}.language-switch a{padding:5px 10px}.header .main-nav{grid-row:2}.header{gap:10px}.header .brand{align-self:center}}
 html[lang="en"] .hero .copy h1>span:first-child{font-size:.85em}html[lang="en"] .hero .copy h1>span:nth-child(2){font-size:.88em}html[lang="en"] .service-options button{font-size:clamp(25px,2.9vw,43px)}
+
+/* Pill navigation: solid on the page, pinned glass capsule once scrolled. */
+.main-nav{justify-self:center;width:max-content;gap:2px;padding:5px;border:1px solid transparent;border-radius:999px;background:#eaf0e5;box-shadow:0 12px 32px -18px #000;transition:background .35s ease,border-color .35s ease,box-shadow .35s ease}
+.main-nav a{border:0;border-radius:999px;padding:11px 22px;font-size:14px;font-weight:700;letter-spacing:-.01em;color:#141a12;background:transparent;transition:color .25s,background .25s}
+.main-nav a:hover{color:#070b08;background:#070b0812;border-color:transparent}
+.main-nav a[aria-current]{color:#d4ff00;background:#070b08}
+.header.nav-pinned{z-index:50}
+.header.nav-pinned .main-nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#0d130e8c;border-color:#eaf0e52e;box-shadow:inset 0 1px 0 #ffffff1f,0 16px 40px -16px #000000d9;-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5)}
+.header.nav-pinned .main-nav a{color:#eaf0e5}
+.header.nav-pinned .main-nav a:hover{background:#eaf0e51a}
+.header.nav-pinned .main-nav a[aria-current]{color:#101600;background:#d4ff00}
+[id]{scroll-margin-top:80px}
+@media(min-width:901px) and (max-width:1150px){.main-nav a{padding:10px 16px;font-size:13px}}
+@media(max-width:900px){.header .main-nav{justify-self:center}.main-nav a{padding:9px 15px;font-size:13px}.header.nav-pinned .main-nav{top:10px}}
+@media(max-width:380px){.main-nav a{padding:8px 11px;font-size:12px}}
