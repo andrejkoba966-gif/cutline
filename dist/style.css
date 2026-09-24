@@ -124,7 +124,7 @@ h1{animation:reveal-up .9s var(--entrance) .12s backwards}
 @media(prefers-reduced-motion:reduce){.route-stop:hover .route-card,.pitlane-bottom button:hover{transform:none}}
 
 /* Quiet studio backdrop, with blur isolated from the readable foreground. */
-.pitlane{position:relative;isolation:isolate;background:#0b100e;color:#eaf0e5;border-block:1px solid #dce9d51a}.pitlane::before{content:"";position:absolute;inset:-20px;z-index:-2;background:url('assets/process-studio-bg.webp') center 56%/cover no-repeat;filter:blur(7px) saturate(.55);pointer-events:none}.pitlane::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#070c0ce6,#080e0ca6 65%,#080c0bbd),linear-gradient(0deg,#070b08cc,transparent 45%,#070b0877);pointer-events:none}.pitlane-top{color:#cad8ba;border-color:#d6e5c529}.pitlane-top>span:first-child{color:#d4ff00}.pitlane-top>span:last-child{color:#929e8b}.pitlane-heading h2 em{color:#a8b69c}.pitlane-heading>p{color:#b1bcaa}.route-marker{color:#cad6be;border-color:#d4e6be40}.route-marker i{color:#d4ff00}.route-card{background:#101611d6;border:1px solid #d8eac320;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.route-stop:last-child .route-card{background:#192217d9;border-color:#caff0030}.route-stop:hover .route-card{background:#1a241bdf;box-shadow:0 18px 30px -20px #0009}.route-tag{color:#a1b194}.route-result span{color:#96a28c}.pitlane-bottom{border-color:#d6e5c529}.pitlane-bottom p{color:#a7b59d}.pitlane-bottom button{background:#c9f727;color:#10170a}.pitlane-bottom button:hover{background:#dbff62}.pitlane button:focus-visible{outline-color:#d4ff00}
+.pitlane{position:relative;isolation:isolate;background:#0b100e;color:#eaf0e5;border-block:1px solid #dce9d51a}.pitlane::before{content:"";position:absolute;inset:-20px;z-index:-2;background:url('assets/process-studio-soft.webp') center 56%/cover no-repeat;filter:blur(7px) saturate(.55);pointer-events:none}.pitlane::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#070c0ce6,#080e0ca6 65%,#080c0bbd),linear-gradient(0deg,#070b08cc,transparent 45%,#070b0877);pointer-events:none}.pitlane-top{color:#cad8ba;border-color:#d6e5c529}.pitlane-top>span:first-child{color:#d4ff00}.pitlane-top>span:last-child{color:#929e8b}.pitlane-heading h2 em{color:#a8b69c}.pitlane-heading>p{color:#b1bcaa}.route-marker{color:#cad6be;border-color:#d4e6be40}.route-marker i{color:#d4ff00}.route-card{background:#101611d6;border:1px solid #d8eac320;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.route-stop:last-child .route-card{background:#192217d9;border-color:#caff0030}.route-stop:hover .route-card{background:#1a241bdf;box-shadow:0 18px 30px -20px #0009}.route-tag{color:#a1b194}.route-result span{color:#96a28c}.pitlane-bottom{border-color:#d6e5c529}.pitlane-bottom p{color:#a7b59d}.pitlane-bottom button{background:#c9f727;color:#10170a}.pitlane-bottom button:hover{background:#dbff62}.pitlane button:focus-visible{outline-color:#d4ff00}
 @media(max-width:600px){.pitlane::before{background-position:65% center;filter:blur(6px) saturate(.55)}.pitlane::after{background:linear-gradient(180deg,#080e0cbf,#080e0cd9)}.pitlane-route{border-color:#c6d9b44d}.route-marker::before{background:#d4ff00;box-shadow:0 0 0 5px #111a12}}
 
 /* Centered outlined navigation and an editorial service index. */
@@ -322,3 +322,39 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 @keyframes lab-ping{0%{box-shadow:0 0 0 0 #d4ff0059}60%,100%{box-shadow:0 0 0 10px #d4ff0000}}
 @media(max-width:600px){.lab-choice h3 button::after{width:32px;height:32px;background-size:12px 1.5px,1.5px 12px}}
 @media(prefers-reduced-motion:reduce){.lab-choice h3 button::after{animation:none}}
+
+/* Scroll performance: pulses run on the compositor, no live backdrop blur over moving content, pre-blurred process backdrop. */
+.link-cta.link-cta{position:relative}
+.link-cta.link-cta::before{animation:none}
+.link-cta.link-cta::after{content:"";position:absolute;left:14px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;border:1px solid var(--lime);pointer-events:none;animation:ring-ping 2.2s ease-out infinite}
+.link-cta.link-cta:is(:hover,:focus-visible)::after{animation:none;opacity:0}
+.lab-choice h3 button{position:relative}
+.lab-choice h3 button::after{animation:none}
+.lab-choice h3 button::before{content:"";position:absolute;right:0;top:50%;width:38px;height:38px;margin-top:-19px;border-radius:50%;border:1px solid var(--lime);pointer-events:none;opacity:0;animation:ring-ping-soft 3s ease-out infinite}
+.lab-choice:nth-child(2) h3 button::before{animation-delay:1s}
+.lab-choice:nth-child(3) h3 button::before{animation-delay:2s}
+.lab-choice.is-active h3 button::before{animation:none}
+.availability i{position:relative;animation:none}
+.availability i::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--lime);animation:ring-ping 2s ease-out infinite}
+@keyframes ring-ping{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(3);opacity:0}}
+@keyframes ring-ping-soft{0%{transform:scale(1);opacity:.5}60%,100%{transform:scale(1.35);opacity:0}}
+@media(max-width:600px){.lab-choice h3 button::before{width:32px;height:32px;margin-top:-16px}}
+@media(prefers-reduced-motion:reduce){.link-cta.link-cta::after,.lab-choice h3 button::before,.availability i::after{animation:none}}
+.pitlane::before{filter:none}
+.route-card{background:#101611ed;-webkit-backdrop-filter:none;backdrop-filter:none}
+.comparison-label{background:#060b08db;-webkit-backdrop-filter:none;backdrop-filter:none}
+.film-controls button{background:#080d09c9;-webkit-backdrop-filter:none;backdrop-filter:none}
+.hero .signature{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0b100dcc}
+.header.nav-pinned .main-nav{background:#0d130eb3;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+@media(max-width:900px){main>section{animation:none!important}}
+
+/* Garage: keep the car photos in proportion (crop the sides instead of squeezing). */
+@media(min-width:601px){.garage-scene{background-size:auto 300%}}
+
+/* Garage review floats and turns slightly in place. */
+.garage-stage{perspective:1100px}
+.garage-review{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0a1419eb;animation:review-float 9s ease-in-out infinite;will-change:transform}
+.garage-review{overflow:hidden}.garage-review::after{content:"";position:absolute;top:0;bottom:0;left:-45%;width:45%;pointer-events:none;background:linear-gradient(105deg,transparent,#ffffff17,transparent);animation:review-gloss 9s ease-in-out infinite}
+@keyframes review-float{0%,100%{translate:0 0;rotate:.2 1 0 -5deg}25%{translate:0 -9px;rotate:.35 1 0 1deg}50%{translate:0 -3px;rotate:.2 1 0 5deg}75%{translate:0 -11px;rotate:-.3 1 0 0deg}}
+@keyframes review-gloss{0%,100%{translate:0 0}50%{translate:330% 0}}
+@media(prefers-reduced-motion:reduce){.garage-review,.garage-review::after{animation:none}}
