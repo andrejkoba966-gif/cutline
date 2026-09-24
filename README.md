@@ -18,11 +18,18 @@ Open http://localhost:4173.
 - `dist/style.css` — styling and responsive layouts
 - `dist/app.js` — video controls, galleries, comparisons and inquiry form
 - `dist/assets/` — images, fonts and videos
-- `.openai/hosting.json` — existing Sites deployment configuration
+- `.openai/hosting.json` — earlier Sites deployment configuration
+- `.github/workflows/pages.yml` — GitHub Pages deployment
 
 ## Deployment
 
-Serve `dist/` as a static website. The current Sites deployment is configured separately; pushing to GitHub alone does not update it.
+GitHub is the single source of truth: edit files here (from Claude, ChatGPT/Codex or by hand) and merge into `main`.
+
+Every push to `main` publishes `dist/` to GitHub Pages via `.github/workflows/pages.yml`. It can also be started manually from the Actions tab (“Deploy to GitHub Pages” → “Run workflow”).
+
+One-time setup: Settings → Pages → Build and deployment → Source: **GitHub Actions**. Free GitHub accounts can use Pages only for public repositories.
+
+The earlier Sites deployment (`.openai/hosting.json`) is separate and is not updated by pushes to GitHub.
 
 ## Content notes
 
