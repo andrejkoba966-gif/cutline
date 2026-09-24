@@ -109,16 +109,13 @@
   "ОБЕРІТЬ СВІЙ ХАРАКТЕР": "CHOOSE YOUR CHARACTER",
   "Обрати автомобіль": "Choose a car",
   "Гараж: перемикайте авто стрілками клавіатури або свайпом": "Garage: switch cars with arrow keys or swipe",
-  "Концепт Nissan 350Z: лаймова плівка та фіолетова графіка": "Nissan 350Z concept: lime wrap with purple graphics",
   "ДЕМО-ВІДГУК": "SAMPLE REVIEW",
   "«Пацани, це реальний роз***б!»": "“Guys, this is f***ing unreal!”",
   "Р": "R",
   "Ростислав": "Rostyslav",
-  "Nissan 350Z · концепт": "Nissan 350Z · concept",
   "Попереднє авто": "Previous car",
   "ЗМІНИТИ АВТО": "SWITCH CAR",
   "Наступне авто": "Next car",
-  "Повне обклеювання · авторська графіка · глянцевий фініш": "Full wrap · custom graphics · gloss finish",
   "ХОЧУ СВІЙ ПРОЄКТ": "START MY PROJECT",
   "КОЛИ АВТО ЗНОВУ ТІШИТЬ": "FALL FOR YOUR CAR AGAIN",
   "ВАШЕ АВТО. ПО-ВАШОМУ.": "YOUR CAR. YOUR WAY.",
@@ -227,5 +224,8 @@
   "Катерина": "Kateryna",
   "Daewoo Matiz · концепт": "Daewoo Matiz · concept",
   "Рожевий глянець · біло-чорна графіка · авторський дизайн": "Pink gloss · white and black graphics · custom design",
-  "Концепт рожевого Daewoo Matiz з біло-чорною графікою": "Concept: pink Daewoo Matiz with white and black graphics"
+  "Концепт рожевого Daewoo Matiz з біло-чорною графікою": "Concept: pink Daewoo Matiz with white and black graphics",
+  "Lamborghini Huracán · концепт": "Lamborghini Huracán · concept",
+  "Фіолетовий глянець · біло-чорна графіка · карбонові акценти": "Violet gloss · white and black graphics · carbon accents",
+  "Концепт фіолетового Lamborghini Huracán з біло-чорною графікою": "Concept: violet Lamborghini Huracán with white and black graphics"
 }
