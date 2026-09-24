@@ -255,3 +255,34 @@ main>section.closing-cta>.closing-visual{animation-name:section-rise-scale}
 
 /* Tablet: let the studio photos follow their column width instead of a min-height that forces them past the viewport. */
 @media(max-width:1050px){.studio-wide,.studio-mirror{min-height:0}}
+
+/* Quote form: free 3D visualisation bonus with a live "wrap preview". */
+.viz-card{position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:center;padding:12px 16px 12px 12px;border:1px solid #d4ff0038;border-radius:14px;background:radial-gradient(120% 100% at 0% 0%,#d4ff0017,transparent 55%),#0a0f0a;overflow:hidden}
+.viz-stage{position:relative;aspect-ratio:1.5;border-radius:10px;background:radial-gradient(80% 70% at 50% 40%,#1a2419,#060907);overflow:hidden;perspective:520px}
+.viz-stage::before{content:"";position:absolute;left:-40%;right:-40%;top:64%;height:120%;background-image:linear-gradient(#d4ff002e 1px,transparent 1px),linear-gradient(90deg,#d4ff002e 1px,transparent 1px);background-size:16px 16px;transform:rotateX(72deg);transform-origin:50% 0;-webkit-mask-image:linear-gradient(#000,transparent 55%);mask-image:linear-gradient(#000,transparent 55%);animation:viz-floor 1.6s linear infinite}
+.viz-stage::after{content:"";position:absolute;top:0;bottom:0;left:0;width:2px;background:linear-gradient(transparent,#d4ff00 30%,#d4ff00 70%,transparent);box-shadow:0 0 12px 2px #d4ff0073;opacity:.75;animation:viz-scan 3.2s ease-in-out infinite}
+.viz-car{position:absolute;left:1%;top:17%;width:98%;height:auto;overflow:visible;animation:viz-turn 7s ease-in-out infinite alternate}
+.viz-outline{fill:none;stroke:#eaf0e5;stroke-opacity:.55;stroke-width:.8}
+.viz-wire{fill:none;stroke:#070b08;stroke-opacity:.35;stroke-width:.7;stroke-dasharray:3 4;animation:viz-dash 1.4s linear infinite}
+.viz-glass{fill:#0a100d;stroke:#eaf0e533;stroke-width:.6}
+.viz-glass-line{fill:none;stroke:#0a100d;stroke-width:1.2}
+.viz-tyre{fill:#040605;stroke:#eaf0e526;stroke-width:1}
+.viz-rim{fill:none;stroke:#c9d0cc;stroke-width:1.6;stroke-dasharray:3.2 2.2;transform-box:fill-box;transform-origin:center;animation:viz-spin 2.4s linear infinite}
+.viz-chip{position:absolute;top:8px;padding:4px 8px;border-radius:20px;background:#070b08c2;border:1px solid #d4ff004d;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--lime);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.viz-chip-a{left:8px}.viz-chip-b{right:8px;color:#eaf0e5;border-color:#eaf0e530}
+dialog .viz-copy p{margin:0 0 12px;font-size:13px;line-height:1.45}
+dialog .viz-copy .viz-kicker{margin:0;font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--lime)}
+.viz-copy strong{display:block;margin:6px 0 6px;font-size:20px;line-height:1.1;letter-spacing:-.025em}
+.viz-check{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer;color:#dfe7d8}
+.viz-check input{flex:none;width:20px;height:20px;padding:0;margin:0;border:1.5px solid #d4ff00;border-radius:6px;background:transparent;appearance:none;-webkit-appearance:none;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.viz-check input::after{content:"";width:5px;height:10px;border:solid #101600;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg) scale(0);transition:transform .2s}
+.viz-check input:checked{background:var(--lime)}
+.viz-check input:checked::after{transform:translateY(-1px) rotate(45deg) scale(1)}
+.viz-check input:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+@keyframes viz-turn{from{transform:rotateY(-20deg) rotateX(6deg)}to{transform:rotateY(20deg) rotateX(6deg)}}
+@keyframes viz-floor{to{background-position:0 16px}}
+@keyframes viz-scan{0%{left:-2%}50%{left:100%}100%{left:-2%}}
+@keyframes viz-dash{to{stroke-dashoffset:-14}}
+@keyframes viz-spin{to{rotate:360deg}}
+@media(max-width:520px){.viz-card{grid-template-columns:1fr;gap:12px;padding:10px 10px 14px}.viz-copy{padding:0 4px}}
+@media(prefers-reduced-motion:reduce){.viz-stage::before,.viz-stage::after,.viz-car,.viz-wire,.viz-rim{animation:none}}
