@@ -128,9 +128,6 @@
   "бо тепер воно саме таке, як хотілося.": "because now it looks just the way you wanted.",
   "Посуньте повзунок і приміряйте новий образ.": "Drag the slider to try a new look.",
   "Візуальні концепції оклейки, не фото виконаних робіт. Реальний відтінок обираємо за зразком плівки.": "Wrap concepts, not photos of completed projects. The final shade is chosen using a physical vinyl sample.",
-  "BMW M4: графіт до та лаймовий глянець після": "BMW M4: graphite before, lime gloss after",
-  "BMW M4 у заводському графітовому кольорі": "BMW M4 in factory graphite",
-  "BMW M4 у лаймовій глянцевій плівці": "BMW M4 in lime gloss vinyl",
   "ДО": "BEFORE",
   "ПІСЛЯ": "AFTER",
   "Шторка порівняння BMW M4": "BMW M4 comparison slider",
@@ -225,5 +222,8 @@
   "Покажемо ваше авто в новому кольорі ще до обклеювання.": "See your car in its new colour before we wrap it.",
   "Хочу 3D-візуалізацію": "I want a 3D visualisation",
   "ваш колір": "your colour",
-  "3D-візуалізація: так, безкоштовно": "3D visualisation: yes, free of charge"
+  "3D-візуалізація: так, безкоштовно": "3D visualisation: yes, free of charge",
+  "BMW M4: чорний до та лаймовий глянець після": "BMW M4: black before, lime gloss after",
+  "BMW M4 у заводському чорному кольорі": "BMW M4 in factory black",
+  "BMW M4 у лаймово-чорній глянцевій плівці": "BMW M4 in lime and black gloss film"
 }
