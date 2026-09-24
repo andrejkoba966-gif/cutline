@@ -308,3 +308,17 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 .service-photo-stack{width:min(79%,calc(44svh * .72))}
 .service-showcase-copy{margin-top:clamp(12px,2.2svh,25px)}
 }
+
+/* Accordion affordance: a ring with a plus that turns into a lime cross when open; closed rows gently ping. */
+.lab-choice h3 button::after{content:"";flex:none;width:38px;height:38px;border-radius:50%;border:1px solid #c9ddad47;background-color:transparent;background-image:linear-gradient(currentColor,currentColor),linear-gradient(currentColor,currentColor);background-size:14px 1.5px,1.5px 14px;background-position:center;background-repeat:no-repeat;transition:transform .5s var(--entrance),background-color .3s,border-color .3s,box-shadow .3s;animation:lab-ping 3s ease-out infinite}
+.lab-choice:nth-child(2) h3 button::after{animation-delay:1s}
+.lab-choice:nth-child(3) h3 button::after{animation-delay:2s}
+.lab-choice h3 button>span{transition:transform .35s var(--entrance)}
+.lab-choice:not(.is-active) h3 button:is(:hover,:focus-visible){color:#dfe9d6}
+.lab-choice:not(.is-active) h3 button:is(:hover,:focus-visible)>span{transform:translateX(8px)}
+.lab-choice:not(.is-active) h3 button:is(:hover,:focus-visible)::after{border-color:var(--lime);color:var(--lime);transform:rotate(90deg);box-shadow:0 0 18px -4px #d4ff0099}
+.lab-choice.is-active h3 button::after{transform:rotate(135deg);background-color:var(--lime);border-color:var(--lime);background-image:linear-gradient(#101600,#101600),linear-gradient(#101600,#101600);animation:none}
+.lab-choice.is-active h3 button:is(:hover,:focus-visible)::after{box-shadow:0 0 0 5px #d4ff0026}
+@keyframes lab-ping{0%{box-shadow:0 0 0 0 #d4ff0059}60%,100%{box-shadow:0 0 0 10px #d4ff0000}}
+@media(max-width:600px){.lab-choice h3 button::after{width:32px;height:32px;background-size:12px 1.5px,1.5px 12px}}
+@media(prefers-reduced-motion:reduce){.lab-choice h3 button::after{animation:none}}
