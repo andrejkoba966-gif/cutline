@@ -235,3 +235,15 @@ html[lang="en"] .hero .copy h1>span:first-child{font-size:.85em}html[lang="en"] 
 @keyframes cta-sheen{0%{transform:translateX(-160%) skewX(-18deg)}28%,100%{transform:translateX(360%) skewX(-18deg)}}
 @media(max-width:900px){.cta-wrap{padding:9px 10px 9px 24px}.cta-wrap .cta-swatch{width:36px;height:36px}}
 @media(prefers-reduced-motion:reduce){.cta-wrap::after,.cta-wrap .cta-swatch{animation:none}}
+
+/* Scroll-linked section transitions: the passing block recedes, the next one's content rises in. */
+@supports (animation-timeline:view()){@media(prefers-reduced-motion:no-preference){
+main>section{transform-origin:50% 100%;animation:section-recede linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+main>section:not(.hero,.studio-story)>:not(.sr-only,img),main>aside{animation:section-rise linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+main>section:not(.hero,.studio-story)>:nth-child(2){animation-range:entry 8% entry 62%}
+main>section:not(.hero,.studio-story)>:nth-child(n+3){animation-range:entry 14% entry 70%}
+main>section.closing-cta>.closing-visual{animation-name:section-rise-scale}
+}}
+@keyframes section-recede{to{scale:.92;opacity:.25}}
+@keyframes section-rise{from{opacity:0;translate:0 70px}}
+@keyframes section-rise-scale{from{opacity:0;translate:0 70px;scale:.94}}
