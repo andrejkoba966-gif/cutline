@@ -27,3 +27,15 @@ Serve `dist/` as a static website. The current Sites deployment is configured se
 ## Content notes
 
 The inquiry form prepares text to copy; it does not send messages to a server. Studio contact details still need to be provided. Gallery concepts and sample reviews are labelled as demonstrations.
+
+## Languages
+
+Ukrainian: `dist/index.html`. English: `dist/en.html`. The UA / EN switch remembers the selected language.
+
+After editing Ukrainian content or interactions, update `scripts/en-translations.json` and run:
+
+```sh
+python3 scripts/build-english.py
+```
+
+Commit the regenerated `dist/en.html` and `dist/en-app.js` alongside the Ukrainian source. Videos retain their original audio.
