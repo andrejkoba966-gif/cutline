@@ -408,12 +408,15 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 .hero .copy .benefits li:hover{color:#101600;background:none;box-shadow:none}
 .hero .copy .benefits li:hover::before{transform:skewX(13deg);background:var(--lime);border-color:var(--lime);box-shadow:0 6px 22px -9px #d4ff00a6}
 
-/* Film-wrap CTA: squarer body, the swatch becomes a slanted film tile whose cut flips on hover. */
-.cta-wrap{border-radius:12px}
-.cta-wrap .cta-swatch,.cta-wrap:is(:hover,:focus-visible) .cta-swatch{position:relative;width:46px;height:38px;border-radius:9px;overflow:hidden;background:#0b100b;box-shadow:inset 0 0 0 1px #ffffff2e;animation:none;transform:skewX(-13deg);transition:transform .5s cubic-bezier(.65,0,.35,1),box-shadow .45s ease}
-.cta-wrap .cta-swatch::before{content:"";position:absolute;inset:-45%;background:conic-gradient(#d4ff00,#1f4dff,#0e5c47,#c7ced3,#2b312c,#ff4d2e,#d4ff00);animation:cta-spin 7s linear infinite}
-.cta-wrap .cta-swatch::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,#ffffff59,#ffffff00 45%),radial-gradient(circle at 50% 50%,#070b08 0 4px,transparent 4.5px)}
-.cta-wrap:is(:hover,:focus-visible) .cta-swatch{transform:skewX(13deg);box-shadow:inset 0 0 0 1px #d4ff0080,0 0 0 3px #d4ff0033}
+
+/* Film-wrap CTA: slanted body (skewed button, contents counter-skewed) whose cut flips on hover; the colour swatch stays round. */
+.cta-wrap{--skew:-10deg;border-radius:12px;transform:skewX(var(--skew));transition:transform .5s cubic-bezier(.65,0,.35,1),color .45s ease,box-shadow .45s ease}
+.cta-wrap:is(:hover,:focus-visible){--skew:10deg;transform:skewX(var(--skew)) translateY(-2px)}
+.cta-wrap:active{transform:skewX(var(--skew))}
+.cta-wrap .cta-label{display:inline-block;width:auto;height:auto;border-radius:0;background:none;font-size:inherit;font-weight:inherit;letter-spacing:inherit;flex:none}
+.cta-wrap .cta-label,.cta-wrap .cta-swatch,.cta-wrap:is(:hover,:focus-visible) .cta-label,.cta-wrap:is(:hover,:focus-visible) .cta-swatch{transform:skewX(calc(var(--skew) * -1));transition:transform .5s cubic-bezier(.65,0,.35,1),box-shadow .45s ease}
+.cta-wrap .cta-swatch,.cta-wrap:is(:hover,:focus-visible) .cta-swatch{position:relative;overflow:hidden;border-radius:50%;background:none;animation:none}
+.cta-wrap .cta-swatch::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#070b08 0 5px,transparent 5.5px),conic-gradient(#d4ff00,#1f4dff,#0e5c47,#c7ced3,#2b312c,#ff4d2e,#d4ff00);animation:cta-spin 7s linear infinite}
+.cta-wrap .cta-swatch::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff40;background:linear-gradient(160deg,#ffffff4d,#ffffff00 50%)}
 .cta-wrap:is(:hover,:focus-visible) .cta-swatch::before{animation-duration:1.4s}
-@media(max-width:900px){.cta-wrap .cta-swatch,.cta-wrap:is(:hover,:focus-visible) .cta-swatch{width:42px;height:36px}}
-@media(prefers-reduced-motion:reduce){.cta-wrap .cta-swatch::before{animation:none}.hero .copy .benefits li::before,.cta-wrap .cta-swatch{transition:none}}
+@media(prefers-reduced-motion:reduce){.cta-wrap .cta-swatch::before{animation:none}.cta-wrap,.cta-wrap .cta-label,.cta-wrap .cta-swatch{transition:none}}
