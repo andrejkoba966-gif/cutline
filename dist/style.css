@@ -380,3 +380,14 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 @media(max-width:600px){.link-cta.link-cta{height:40px;font-size:10.5px}.lc-label{padding-left:15px}}
 @media(prefers-reduced-motion:reduce){.lc-label,.lc-arrow,.lc-label::after,.lc-arrow::before,.lc-arrow svg{transition:none}}
 .pitlane-bottom .link-cta.link-cta,.pitlane-bottom .link-cta.link-cta:is(:hover,:focus-visible){background:none;padding:0;width:max-content;justify-content:flex-start;transform:none}
+
+/* Nav geometry matches the split CTAs: squarer capsule, slanted chips whose cut flips on hover. */
+.main-nav{border-radius:15px;padding:5px 9px;gap:6px}
+.main-nav a{position:relative;isolation:isolate;border-radius:0;background:transparent!important}
+.main-nav a::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:10px;background:transparent;transform:skewX(-13deg);transition:transform .5s cubic-bezier(.65,0,.35,1),background-color .3s ease}
+.main-nav a:hover::before{background:#070b0812;transform:skewX(13deg)}
+.main-nav a[aria-current]::before{background:#070b08}
+.main-nav a[aria-current]:hover::before{transform:skewX(13deg)}
+.header.nav-pinned .main-nav a:hover::before{background:#eaf0e51a}
+.header.nav-pinned .main-nav a[aria-current]::before{background:#d4ff00}
+@media(prefers-reduced-motion:reduce){.main-nav a::before{transition:none}}
