@@ -118,10 +118,6 @@
   "ХОЧУ СВІЙ ПРОЄКТ": "START MY PROJECT",
   "КОЛИ АВТО ЗНОВУ ТІШИТЬ": "FALL FOR YOUR CAR AGAIN",
   "ВАШЕ АВТО. ПО-ВАШОМУ.": "YOUR CAR. YOUR WAY.",
-  "Припаркуватися.": "Park up.",
-  "Відійти на кілька кроків.": "Walk a few steps away.",
-  "І озирнутися —": "And look back —",
-  "бо тепер воно саме таке, як хотілося.": "because now it looks just the way you wanted.",
   "Посуньте повзунок і приміряйте новий образ.": "Drag the slider to try a new look.",
   "Візуальні концепції оклейки, не фото виконаних робіт. Реальний відтінок обираємо за зразком плівки.": "Wrap concepts, not photos of completed projects. The final shade is chosen using a physical vinyl sample.",
   "ДО": "BEFORE",
@@ -227,5 +223,8 @@
   "Сріблястий Daewoo Matiz до обклеювання": "Silver Daewoo Matiz before the wrap",
   "Daewoo Matiz у рожевій глянцевій плівці з графікою": "Daewoo Matiz in pink gloss film with graphics",
   "Шторка порівняння Daewoo Matiz": "Daewoo Matiz comparison slider",
-  "Змінюємо колір кузова без фарбування. Преміальна плівка захищає лак, тримає форму та легко знімається при продажі авто.": "A new colour without repainting. Premium film protects the paint, holds its shape and comes off cleanly when you sell the car."
+  "Змінюємо колір кузова без фарбування. Преміальна плівка захищає лак, тримає форму та легко знімається при продажі авто.": "A new colour without repainting. Premium film protects the paint, holds its shape and comes off cleanly when you sell the car.",
+  "Те саме авто.": "The same car.",
+  "Зовсім інше відчуття,": "A whole new feeling",
+  "коли озираєшся.": "when you look back."
 }
