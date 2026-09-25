@@ -7,7 +7,7 @@ root=Path(__file__).resolve().parent.parent
 translations=json.loads((root/'scripts/en-translations.json').read_text())
 missing=set()
 def translate(s):
- key=unescape(s.strip())
+ key=unescape(s.strip()).replace('\u00a0',' ')
  if not re.search('[А-Яа-яІіЇїЄє]',key):return s
  if key not in translations:
   missing.add(key);return s
@@ -24,7 +24,7 @@ s=s.replace('href="index.html" lang="uk" hreflang="uk" aria-current="page"','hre
 (root/'dist/en.html').write_text(s)
 j=(root/'dist/app.js').read_text()
 def js_string(m):
- val=m[1]
+ val=m[1].replace('\u00a0',' ')
  if val in translations:return json.dumps(translations[val],ensure_ascii=False)
  return m[0]
 j=re.sub(r"'([^'\\]*(?:\\.[^'\\]*)*)'",js_string,j)
