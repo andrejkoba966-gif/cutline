@@ -277,14 +277,8 @@ dialog .viz-copy .viz-kicker{margin:0;font-size:10px;font-weight:700;letter-spac
 @media(prefers-reduced-motion:reduce){.viz-stage::before,.viz-stage::after,.viz-car,.viz-wire,.viz-rim{animation:none}}
 
 /* Text links that open the quote form: a lime pill with a pulsing dot so they read as clickable. */
-.link-cta.link-cta{display:inline-flex;align-items:center;gap:10px;width:max-content;max-width:100%;margin-top:18px;padding:11px 18px 11px 14px;border:1px solid #d4ff0066;border-radius:999px;background:#d4ff0010;color:var(--lime);font-size:11px;font-weight:700;letter-spacing:.08em;line-height:1.2;text-align:left;cursor:pointer;transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease,box-shadow .25s ease}
-.link-cta.link-cta::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--lime);animation:link-pulse 2.2s ease-out infinite}
-.link-cta.link-cta:is(:hover,:focus-visible){background:var(--lime);border-color:var(--lime);color:#101600;transform:translateY(-2px);box-shadow:0 12px 28px -14px #d4ff00cc}
-.link-cta.link-cta:is(:hover,:focus-visible)::before{background:#101600;animation:none}
-.link-cta.link-cta:active{transform:translateY(0)}
 .garage-bottom .link-cta.link-cta,.lab-consult .link-cta.link-cta{margin-top:0}
 @keyframes link-pulse{0%{box-shadow:0 0 0 0 #d4ff0099}70%,100%{box-shadow:0 0 0 7px #d4ff0000}}
-@media(prefers-reduced-motion:reduce){.link-cta.link-cta::before{animation:none}}
 
 /* Services block fits one screen on desktop: sizes follow viewport height as well as width. */
 @media(min-width:901px){
@@ -313,10 +307,6 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 @media(prefers-reduced-motion:reduce){.lab-choice h3 button::after{animation:none}}
 
 /* Scroll performance: pulses run on the compositor, no live backdrop blur over moving content, pre-blurred process backdrop. */
-.link-cta.link-cta{position:relative}
-.link-cta.link-cta::before{animation:none}
-.link-cta.link-cta::after{content:"";position:absolute;left:14px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;border:1px solid var(--lime);pointer-events:none;animation:ring-ping 2.2s ease-out infinite}
-.link-cta.link-cta:is(:hover,:focus-visible)::after{animation:none;opacity:0}
 .lab-choice h3 button{position:relative}
 .lab-choice h3 button::after{animation:none}
 .lab-choice h3 button::before{content:"";position:absolute;right:0;top:50%;width:38px;height:38px;margin-top:-19px;border-radius:50%;border:1px solid var(--lime);pointer-events:none;opacity:0;animation:ring-ping-soft 3s ease-out infinite}
@@ -328,7 +318,7 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 @keyframes ring-ping{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(3);opacity:0}}
 @keyframes ring-ping-soft{0%{transform:scale(1);opacity:.5}60%,100%{transform:scale(1.35);opacity:0}}
 @media(max-width:600px){.lab-choice h3 button::before{width:32px;height:32px;margin-top:-16px}}
-@media(prefers-reduced-motion:reduce){.link-cta.link-cta::after,.lab-choice h3 button::before,.availability i::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.lab-choice h3 button::before,.availability i::after{animation:none}}
 .pitlane::before{filter:none}
 .route-card{background:#101611ed;-webkit-backdrop-filter:none;backdrop-filter:none}
 .comparison-label{background:#060b08db;-webkit-backdrop-filter:none;backdrop-filter:none}
@@ -369,3 +359,24 @@ html[lang="en"] .service-options button{font-size:clamp(24px,min(2.9vw,4.8svh),4
 @media(min-width:801px) and (max-width:1150px){.garage-stage{min-height:0;aspect-ratio:2.2}.garage-review{width:36%;top:13%;padding:18px}.garage-review blockquote{font-size:clamp(17px,2.1vw,24px);margin:12px 0 16px}}
 @media(min-width:601px) and (max-width:800px){.garage-scene:is(.scene-matiz,.scene-huracan){width:100%;aspect-ratio:2.2;background-position:center 40%}.garage-scene.scene-huracan{background-position:center 55%}}
 @media(max-width:600px){.garage-car-title h3{font-size:clamp(22px,6.6vw,30px);white-space:nowrap}}
+
+/* Split CTA: label pill + arrow tile joined by a slanted cut; on hover the colours swap and the cut flips direction. */
+.link-cta.link-cta{--cut:-13deg;--ease:cubic-bezier(.65,0,.35,1);display:inline-flex;gap:0;align-items:stretch;width:max-content;max-width:100%;height:42px;margin-top:18px;padding:0;border:0;background:none;color:#eaf0e5;font-size:11px;font-weight:700;letter-spacing:.09em;line-height:1.2;text-align:left;cursor:pointer;isolation:isolate}
+.link-cta.link-cta .lc-label,.link-cta.link-cta .lc-arrow{font-size:inherit;font-weight:inherit;opacity:1;transform:none;white-space:nowrap;margin:0}
+.link-cta.link-cta .lc-arrow{margin-left:27px}
+.lc-label,.lc-arrow{position:relative;display:flex;align-items:center;transition:background-color .45s var(--ease),color .45s var(--ease)}
+.lc-label{padding:0 10px 0 18px;border-radius:11px 0 0 11px;background:#1c251b}
+.lc-arrow{justify-content:center;width:34px;margin-left:15px;border-radius:0 11px 11px 0;background:var(--lime);color:#101600}
+.lc-label::after,.lc-arrow::before{content:"";position:absolute;top:0;bottom:0;width:22px;z-index:-1;background:inherit;transform:skewX(var(--cut));transition:transform .5s var(--ease)}
+.lc-label::after{right:-11px;border-radius:0 11px 11px 0}
+.lc-arrow::before{left:-11px;border-radius:11px 0 0 11px}
+.lc-arrow svg{width:15px;height:15px;transform:translateX(-3px);transition:transform .45s var(--ease)}
+.link-cta.link-cta:is(:hover,:focus-visible){--cut:13deg}
+.link-cta.link-cta:is(:hover,:focus-visible) .lc-label{background:var(--lime);color:#101600}
+.link-cta.link-cta:is(:hover,:focus-visible) .lc-arrow{background:#1c251b;color:var(--lime)}
+.link-cta.link-cta:is(:hover,:focus-visible) .lc-arrow svg{transform:translateX(1px)}
+.link-cta.link-cta:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.link-cta.link-cta:active .lc-label,.link-cta.link-cta:active .lc-arrow{filter:brightness(.92)}
+@media(max-width:600px){.link-cta.link-cta{height:40px;font-size:10.5px}.lc-label{padding-left:15px}}
+@media(prefers-reduced-motion:reduce){.lc-label,.lc-arrow,.lc-label::after,.lc-arrow::before,.lc-arrow svg{transition:none}}
+.pitlane-bottom .link-cta.link-cta,.pitlane-bottom .link-cta.link-cta:is(:hover,:focus-visible){background:none;padding:0;width:max-content;justify-content:flex-start;transform:none}
