@@ -486,3 +486,6 @@ html[lang="en"] .hero .copy h1>.outline{--line:1.45em;--gap:.32em}
 @keyframes speed-pulse{0%{transform:translateX(calc(var(--line) * -1 + .8em));opacity:0}8%{opacity:1}42%{transform:translateX(.1em);opacity:1}50%,100%{transform:translateX(.1em);opacity:0}}
 @keyframes word-kick{0%,40%{translate:0 0}46%{translate:.06em 0}58%,100%{translate:0 0}}
 @media(prefers-reduced-motion:reduce){.hero .copy h1>.outline,.hero .copy h1>.outline::before,.hero .copy h1>.outline::after{animation:none}}
+
+/* Hero signature card: denser glass so the backdrop grid lines don't show through; spacing to the stats is set by script. */
+.hero .signature{background:linear-gradient(135deg,#ffffff0d,#ffffff00 45%),#0b100df0}
