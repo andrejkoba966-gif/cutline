@@ -489,3 +489,6 @@ html[lang="en"] .hero .copy h1>.outline{--line:1.45em;--gap:.32em}
 
 /* Hero signature card: denser glass so the backdrop grid lines don't show through; spacing to the stats is set by script. */
 .hero .signature{background:linear-gradient(135deg,#ffffff0d,#ffffff00 45%),#0b100df0}
+
+/* Dark page canvas so browser bars, overscroll and safe areas blend with the site. */
+html{background:#070b08;color-scheme:dark}
