@@ -549,3 +549,8 @@ html{background:#070b08;color-scheme:dark}
 @media(prefers-reduced-motion:reduce){.cfg-tint{transition:none}}
 @media(max-width:900px){.hero-stage.show-cfg .film-controls{top:12px!important;bottom:auto!important;right:4%!important}}
 @media(min-width:901px) and (max-width:1150px){.cfg-panel{left:auto;right:3%;top:15%;width:min(360px,50%);padding:16px 18px}.cfg-sw{width:32px;height:32px}.cfg-swatches{gap:8px}.cfg-name{font-size:19px}}
+
+/* Colour-change gloss: move the highlight inside a fixed wrap mask (moving the element dragged the mask along and read as a flying shadow). */
+.cfg-shine{transform:none;opacity:1;background:linear-gradient(100deg,transparent 42%,#ffffff30 50%,transparent 58%) no-repeat;background-size:250% 100%;background-position:120% 0}
+.cfg-car.flash .cfg-shine{animation:cfg-shine-pos .9s ease-out}
+@keyframes cfg-shine-pos{from{background-position:120% 0}to{background-position:-20% 0}}
