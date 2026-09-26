@@ -434,3 +434,15 @@ body,button,input,select,textarea{font-family:Manrope,Arial,Helvetica,sans-serif
 h2,h3,.tagline,.lab-promise,.garage-review blockquote{font-family:Manrope,Arial,sans-serif}
 .eyebrow,.story-kicker,.scene-label,.service-menu-head>p,.lab-top,.lab-result,.garage-heading>div>p,.garage-console,.garage-car-title>span,.garage-controls>span,.review-demo,.section-topline,.comparison-label,.comparison-info>div>span,.finish-tag,.pitlane-top,.route-tag,.route-result span,.closing-kicker,.photo-caption,.service-photo-label>span,.dialog-label,.viz-chip,dialog .viz-copy .viz-kicker,.section-ticker{font-family:Unbounded,Manrope,sans-serif;font-weight:500;letter-spacing:.06em}
 .hero .copy h1,.hero .copy h1>span:first-child{font-family:Arial,Helvetica,sans-serif}
+
+/* Hero title: Unbounded, two balanced lines with a slight forward slant; the key word in lime. */
+.hero .copy h1,.hero .copy h1>span:first-child{font-family:Unbounded,Manrope,sans-serif}
+.hero .copy h1{font-weight:700;letter-spacing:-.035em;line-height:1.04;white-space:nowrap;font-size:clamp(34px,min(6vw,11svh),112px)}
+@media(max-width:900px){.hero .copy h1{font-size:8.3vw}}
+.hero .copy h1>span{display:inline-block;transform:skewX(-7deg);transform-origin:0 100%;font-size:1em!important;line-height:1.04!important;letter-spacing:-.035em!important;font-weight:700!important;margin:0}
+.hero .copy h1>span:first-child{display:block;width:max-content;color:#eef3e8}
+.hero .copy h1>span:nth-child(2){color:#eef3e8}
+.hero .copy h1>.outline{margin-left:.26em;-webkit-text-stroke:0;color:var(--lime);-webkit-text-fill-color:currentColor;background:none}
+html[lang="en"] .hero .copy h1>span:first-child{display:inline-block}
+html[lang="en"] .hero .copy h1>span:nth-child(2){margin-left:.26em}
+html[lang="en"] .hero .copy h1>.outline{display:block;width:max-content;margin-left:0}
