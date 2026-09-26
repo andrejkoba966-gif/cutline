@@ -492,3 +492,17 @@ html[lang="en"] .hero .copy h1>.outline{--line:1.45em;--gap:.32em}
 
 /* Dark page canvas so browser bars, overscroll and safe areas blend with the site. */
 html{background:#070b08;color-scheme:dark}
+
+/* Aurora: large soft brand-colour glows that drift very slowly (transform only), plus gentle corner glows per section. No grain, no lines. */
+.hero::before{content:"";position:absolute;z-index:1;left:-25%;top:-20%;width:95%;height:140%;pointer-events:none;background:radial-gradient(38% 34% at 30% 62%,#d4ff0024,#d4ff0000 72%),radial-gradient(34% 40% at 12% 22%,#11b07c26,#11b07c00 72%),radial-gradient(40% 36% at 62% 88%,#1d6f8a26,#1d6f8a00 72%);animation:aurora-drift 26s ease-in-out infinite alternate}
+.hero .copy,.hero .signature,.hero .stats{z-index:2}
+@keyframes aurora-drift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(6%,-4%,0) scale(1.08)}100%{transform:translate3d(-3%,5%,0) scale(1.03)}}
+.studio-story{background:radial-gradient(40% 28% at 0% 14%,#11b07c1f,#11b07c00 70%),radial-gradient(42% 24% at 100% 52%,#d4ff0012,#d4ff0000 70%),radial-gradient(48% 28% at 18% 92%,#1d6f8a24,#1d6f8a00 70%)}
+.film-lab{background-image:radial-gradient(45% 55% at 100% 0%,#d4ff0014,#d4ff0000 70%),radial-gradient(50% 60% at 0% 100%,#11b07c1c,#11b07c00 70%)}
+.garage{background-image:radial-gradient(50% 60% at 0% 0%,#1d6f8a2e,#1d6f8a00 70%),radial-gradient(40% 50% at 100% 100%,#d4ff000f,#d4ff0000 70%)}
+.transformations{background:radial-gradient(45% 45% at 100% 8%,#11b07c1c,#11b07c00 70%),radial-gradient(50% 50% at 0% 100%,#d4ff0010,#d4ff0000 70%)}
+.closing-cta{background-image:radial-gradient(60% 80% at 0% 0%,#d4ff0014,#d4ff0000 70%)}
+@media(max-width:900px){.hero::before{left:-40%;width:180%;height:120%}}
+@media(prefers-reduced-motion:reduce){.hero::before{animation:none}}
+.hero::before{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 82%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 82%)}
+@media(max-width:900px){.hero::before{-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 30%,transparent 55%);mask-image:linear-gradient(180deg,#000 0%,#000 30%,transparent 55%)}}
