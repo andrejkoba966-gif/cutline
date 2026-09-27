@@ -21,7 +21,7 @@ def attr(m):
 s=re.sub(r'(content|aria-label|aria-roledescription|alt|placeholder|data-service)="([^"]*)"',attr,s)
 s=s.replace('<html lang="uk">','<html lang="en">').replace('src="app.js"','src="en-app.js"').replace('class="brand" href="./"','class="brand" href="en.html"')
 s=s.replace('href="index.html" lang="uk" hreflang="uk" aria-current="page"','href="index.html" lang="uk" hreflang="uk"').replace('href="en.html" lang="en" hreflang="en"','href="en.html" lang="en" hreflang="en" aria-current="page"')
-s=s.replace('<link rel="preload" href="assets/fonts/coolvetica-heavy.woff2" as="font" type="font/woff2" crossorigin>','<link rel="preload" href="assets/fonts/unbounded-latin.woff2" as="font" type="font/woff2" crossorigin>')
+s=s.replace('<link rel="preload" href="assets/fonts/coolvetica-heavy.woff2" as="font" type="font/woff2" crossorigin>','').replace('<link rel="preload" href="assets/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>','')
 (root/'dist/en.html').write_text(s)
 j=(root/'dist/app.js').read_text()
 def js_string(m):
