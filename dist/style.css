@@ -555,13 +555,11 @@ html{background:#070b08;color-scheme:dark}
 .cfg-car.flash .cfg-shine{animation:cfg-shine-pos .9s ease-out}
 @keyframes cfg-shine-pos{from{background-position:120% 0}to{background-position:-20% 0}}
 
-/* Focus falloff on headings (inspired by "Race Day"): letters sharpen toward the middle of each word and drift out of focus toward its end, with a soft glow. */
-.fx-focus fx-w{white-space:nowrap}
-@supports ((mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000))){
-.fx-focus fx-l{position:relative;display:inline-block;isolation:isolate;-webkit-text-fill-color:transparent}
-.fx-focus fx-l::before,.fx-focus fx-l::after{content:attr(data-c);position:absolute;left:-.3em;top:-.4em;padding:.4em .3em;-webkit-text-fill-color:currentColor;pointer-events:none;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:calc(var(--lw,100%) + 1.2em) 100%;mask-size:calc(var(--lw,100%) + 1.2em) 100%;-webkit-mask-position:calc(var(--lx,0px) * -1 - .3em) 0;mask-position:calc(var(--lx,0px) * -1 - .3em) 0}
-.fx-focus fx-l::before{z-index:1;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,62%) + 12%),#000000c7 100%);mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,62%) + 12%),#000000c7 100%)}
-.fx-focus fx-l::after{z-index:0;filter:blur(.05em);-webkit-mask-image:linear-gradient(90deg,#0000001f 0,transparent 6%,transparent var(--fs,62%),#000 92%);mask-image:linear-gradient(90deg,#0000001f 0,transparent 6%,transparent var(--fs,62%),#000 92%)}
-}
-.fx-measure h-word-in,.fx-measure>span,.fx-measure{transform:none!important;translate:none!important;rotate:none!important;transition:none!important;animation:none!important}
+
+/* Focus falloff (Race Day): each word = a sharp copy fading out toward its end + a blurred copy fading in; one continuous gradient per word, no per-letter pieces. */
+fx-word{--fs0:58%;--fend:.42;--fb0:52%;--fbl:.06em;position:relative;display:inline-block;white-space:nowrap}
+fx-sharp,fx-blur{display:inline-block;padding:.35em .32em;margin:-.35em -.32em;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+fx-sharp{-webkit-mask-image:linear-gradient(90deg,#000 0,#000 var(--fs0),rgb(0 0 0/var(--fend)) 100%);mask-image:linear-gradient(90deg,#000 0,#000 var(--fs0),rgb(0 0 0/var(--fend)) 100%)}
+fx-blur{position:absolute;left:0;top:0;pointer-events:none;-webkit-user-select:none;user-select:none;filter:blur(var(--fbl));-webkit-mask-image:linear-gradient(90deg,transparent 0,transparent var(--fb0),#000 94%);mask-image:linear-gradient(90deg,transparent 0,transparent var(--fb0),#000 94%)}
+.fx-soft{--fs0:55%;--fend:.5;--fb0:50%;--fbl:.05em}
 .split-done h-word{overflow:visible}
