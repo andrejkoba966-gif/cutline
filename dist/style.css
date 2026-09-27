@@ -559,8 +559,9 @@ html{background:#070b08;color-scheme:dark}
 .fx-focus fx-w{white-space:nowrap}
 @supports ((mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000))){
 .fx-focus fx-l{position:relative;display:inline-block;isolation:isolate;-webkit-text-fill-color:transparent}
-.fx-focus fx-l::before,.fx-focus fx-l::after{content:attr(data-c);position:absolute;left:0;top:0;-webkit-text-fill-color:currentColor;pointer-events:none;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:var(--lw,100%) 100%;mask-size:var(--lw,100%) 100%;-webkit-mask-position:calc(var(--lx,0px) * -1) 0;mask-position:calc(var(--lx,0px) * -1) 0}
-.fx-focus fx-l::before{z-index:1;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,60%) + 14%),#0000008c 100%);mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,60%) + 14%),#0000008c 100%)}
-.fx-focus fx-l::after{z-index:0;filter:blur(.042em);text-shadow:0 0 .06em color-mix(in srgb,currentColor 25%,transparent);-webkit-mask-image:linear-gradient(90deg,#00000026 0,transparent 5%,transparent var(--fs,60%),#000 100%);mask-image:linear-gradient(90deg,#00000026 0,transparent 5%,transparent var(--fs,60%),#000 100%)}
+.fx-focus fx-l::before,.fx-focus fx-l::after{content:attr(data-c);position:absolute;left:-.3em;top:-.4em;padding:.4em .3em;-webkit-text-fill-color:currentColor;pointer-events:none;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:calc(var(--lw,100%) + 1.2em) 100%;mask-size:calc(var(--lw,100%) + 1.2em) 100%;-webkit-mask-position:calc(var(--lx,0px) * -1 - .3em) 0;mask-position:calc(var(--lx,0px) * -1 - .3em) 0}
+.fx-focus fx-l::before{z-index:1;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,62%) + 12%),#000000c7 100%);mask-image:linear-gradient(90deg,#000 0,#000 calc(var(--fs,62%) + 12%),#000000c7 100%)}
+.fx-focus fx-l::after{z-index:0;filter:blur(.05em);-webkit-mask-image:linear-gradient(90deg,#0000001f 0,transparent 6%,transparent var(--fs,62%),#000 92%);mask-image:linear-gradient(90deg,#0000001f 0,transparent 6%,transparent var(--fs,62%),#000 92%)}
 }
 .fx-measure h-word-in,.fx-measure>span,.fx-measure{transform:none!important;translate:none!important;rotate:none!important;transition:none!important;animation:none!important}
+.split-done h-word{overflow:visible}
