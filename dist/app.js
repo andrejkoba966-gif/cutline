@@ -59,3 +59,5 @@ video.addEventListener('ended',show);
 replay.addEventListener('click',()=>{stopAuto();stage.classList.remove('show-cfg');document.querySelector('.hero').classList.remove('cfg-on');replay.hidden=true;video.dispatchEvent(new Event('cutline-replay'));});
 })();
 
+
+(()=>{const o=document.querySelector('.hero .copy h1>.outline');if(!o||o.querySelector('ghost-w'))return;const t=o.textContent;const w=document.createElement('ghost-w');w.dataset.t=t;w.textContent=t;o.replaceChildren(w);})();
