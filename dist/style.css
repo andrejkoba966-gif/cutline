@@ -559,12 +559,8 @@ html{background:#070b08;color-scheme:dark}
 
 .split-done h-word{overflow:visible}
 
-/* Key word double-exposure: two soft offset ghosts trail the word; they drift further on each speed-line kick. */
+/* Key word motion blur: a horizontally smeared copy trails behind the word (directional SVG blur); it stretches on each speed-line kick. */
 ghost-w{position:relative;display:inline-block;isolation:isolate}
-ghost-w::before,ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;pointer-events:none;-webkit-user-select:none;user-select:none}
-ghost-w::before,ghost-w::after{color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:.022em var(--lime)}
-ghost-w::before{opacity:.55;filter:blur(.006em);translate:-.2em .045em;animation:ghost-a 3.8s ease-out 1.5s infinite}
-ghost-w::after{opacity:.22;filter:blur(.02em);translate:-.42em .09em;animation:ghost-b 3.8s ease-out 1.5s infinite}
-@keyframes ghost-a{0%,40%{translate:-.2em .045em}47%{translate:-.3em .06em}72%,100%{translate:-.2em .045em}}
-@keyframes ghost-b{0%,40%{translate:-.42em .09em}48%{translate:-.6em .12em}76%,100%{translate:-.42em .09em}}
-@media(prefers-reduced-motion:reduce){ghost-w::before,ghost-w::after{animation:none}}
+ghost-w::before{content:attr(data-t);position:absolute;left:-.7em;top:0;padding-left:.7em;z-index:-1;pointer-events:none;-webkit-user-select:none;user-select:none;opacity:.42;filter:url(#motion-blur);transform-origin:100% 50%;translate:-.16em 0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 52%,transparent 84%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 52%,transparent 84%);animation:smear 3.8s ease-out 1.5s infinite}
+@keyframes smear{0%,40%{opacity:.42;scale:1 1;translate:-.16em 0}47%{opacity:.7;scale:1.1 1;translate:-.26em 0}75%,100%{opacity:.42;scale:1 1;translate:-.16em 0}}
+@media(prefers-reduced-motion:reduce){ghost-w::before{animation:none}}
