@@ -556,12 +556,5 @@ html{background:#070b08;color-scheme:dark}
 @keyframes cfg-shine-pos{from{background-position:120% 0}to{background-position:-20% 0}}
 
 
-/* Focus falloff (Race Day): three soft defocus spots per word (start, middle, end) that cut through parts of letters; sharp copy dims inside the spots, blurred copy shows only there. */
-fx-word{--keep:.5;--fbl:.05em;--ax:.46em;--ay:72%;--aw:.34em;--ah:.42em;--bx:52%;--by:24%;--bw:.36em;--bh:.4em;--cx:calc(100% - .4em);--cy:34%;--cw:.44em;--ch:.5em;position:relative;display:inline-block;white-space:nowrap}
-fx-sharp,fx-blur{display:inline-block;padding:.35em .32em;margin:-.35em -.32em;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
-fx-sharp{-webkit-mask-image:radial-gradient(var(--aw) var(--ah) at var(--ax) var(--ay),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%),radial-gradient(var(--bw) var(--bh) at var(--bx) var(--by),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%),radial-gradient(var(--cw) var(--ch) at var(--cx) var(--cy),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%);mask-image:radial-gradient(var(--aw) var(--ah) at var(--ax) var(--ay),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%),radial-gradient(var(--bw) var(--bh) at var(--bx) var(--by),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%),radial-gradient(var(--cw) var(--ch) at var(--cx) var(--cy),rgb(0 0 0/var(--keep)) 0,rgb(0 0 0/var(--keep)) 25%,#000 100%);-webkit-mask-composite:source-in;mask-composite:intersect}
-fx-blur{position:absolute;left:0;top:0;pointer-events:none;-webkit-user-select:none;user-select:none;filter:blur(var(--fbl));-webkit-mask-image:radial-gradient(var(--aw) var(--ah) at var(--ax) var(--ay),#000 0,#000 25%,transparent 100%),radial-gradient(var(--bw) var(--bh) at var(--bx) var(--by),#000 0,#000 25%,transparent 100%),radial-gradient(var(--cw) var(--ch) at var(--cx) var(--cy),#000 0,#000 25%,transparent 100%);mask-image:radial-gradient(var(--aw) var(--ah) at var(--ax) var(--ay),#000 0,#000 25%,transparent 100%),radial-gradient(var(--bw) var(--bh) at var(--bx) var(--by),#000 0,#000 25%,transparent 100%),radial-gradient(var(--cw) var(--ch) at var(--cx) var(--cy),#000 0,#000 25%,transparent 100%)}
-.fx-p2{--ay:30%;--by:70%;--cx:calc(100% - .5em);--cy:70%}
-.fx-p3{--ax:.5em;--ay:45%;--bx:46%;--by:55%;--cy:50%;--ch:.6em}
-.fx-soft{--keep:.55;--fbl:.045em}
+
 .split-done h-word{overflow:visible}
