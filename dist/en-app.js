@@ -60,5 +60,5 @@ replay.addEventListener('click',()=>{stopAuto();stage.classList.remove('show-cfg
 })();
 
 (()=>{const wrap=(el,cls)=>{if(!el||el.querySelector('fx-word'))return;const html=el.innerHTML;const w=document.createElement('fx-word');if(cls)w.className=cls;const s=document.createElement('fx-sharp');s.innerHTML=html;const b=document.createElement('fx-blur');b.setAttribute('aria-hidden','true');b.innerHTML=html;w.append(s,b);el.replaceChildren(w);};
-document.querySelectorAll('.hero .copy h1>span').forEach(s=>wrap(s));
-document.querySelectorAll('main>section:not(.hero) h2').forEach(h=>{const words=[...h.querySelectorAll('h-word-in')].filter(w=>w.textContent.replace(/[^\p{L}]/gu,'').length>=2);const last=words[words.length-1];if(last)wrap(last,'fx-soft');});})();
+const pats=['fx-p1','fx-p2','fx-p3'];let k=0;document.querySelectorAll('.hero .copy h1>span').forEach(s=>wrap(s,pats[k++%3]));
+document.querySelectorAll('main>section:not(.hero) h2').forEach(h=>{const words=[...h.querySelectorAll('h-word-in')].filter(w=>w.textContent.replace(/[^\p{L}]/gu,'').length>=2);const last=words[words.length-1];if(last)wrap(last,'fx-soft '+pats[k++%3]);});})();
