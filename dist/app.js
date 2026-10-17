@@ -54,10 +54,15 @@ const startAuto=()=>{stopAuto();if(matchMedia('(prefers-reduced-motion: reduce)'
 sw.forEach((b,i)=>b.addEventListener('click',()=>select(i,true)));
 cfg.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(current+(e.key==='ArrowRight'?1:-1),true);}});
 let sx=null;cfg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});cfg.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)select(current+(dx<0?1:-1),true);sx=null;});
-const film=car.querySelector('.cfg-film');let arrived=false,done=false;const arrive=()=>{if(arrived)return;arrived=true;document.dispatchEvent(new Event('cutline:car-arrived'));};
-const finish=()=>{if(done)return;done=true;car.classList.add('still');setTimeout(arrive,1100);setTimeout(startAuto,5600);if(film){film.pause();}};
-const show=()=>{document.querySelector('.hero').classList.add('cfg-on');stage.classList.add('show-cfg');
+const film=car.querySelector('.cfg-film');let done=false;
+const hero=document.querySelector('.hero');
+/* One timeline: the speed line charges while the car backs in (bound to the film clock); the frame the car stops, the key word slams in, a glint runs across it, then the light jumps onto the car wrap and the floor ring. Delays live in CSS (.hero.hit …). */
+const finish=()=>{if(done)return;done=true;hero.style.setProperty('--drive','1');car.classList.add('still');hero.classList.add('hit');setTimeout(startAuto,6000);if(film){film.pause();}
+if(matchMedia('(pointer: fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let raf=0,mx=0,my=0;hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();mx=(e.clientX-r.left)/r.width*2-1;my=(e.clientY-r.top)/r.height*2-1;if(!raf)raf=requestAnimationFrame(()=>{raf=0;car.style.setProperty('--mx',mx.toFixed(3));car.style.setProperty('--my',my.toFixed(3));});});hero.addEventListener('pointerleave',()=>{car.style.setProperty('--mx','0');car.style.setProperty('--my','0');});}};
+const show=()=>{hero.classList.add('cfg-on');stage.classList.add('show-cfg');
 if(!film||matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
+hero.classList.add('seq');const tick=()=>{if(done)return;const d=film.duration||2.8;hero.style.setProperty('--drive',Math.min(1,film.currentTime/d).toFixed(3));requestAnimationFrame(tick);};requestAnimationFrame(tick);
+const guard=setTimeout(()=>{if(film.paused||film.currentTime===0)finish();},2500);film.addEventListener('playing',()=>clearTimeout(guard),{once:true});
 film.addEventListener('ended',finish);film.addEventListener('error',finish,true);
 const p=film.play();if(p&&p.catch)p.catch(finish);};
 requestAnimationFrame(show);
@@ -67,30 +72,4 @@ requestAnimationFrame(show);
 (()=>{const o=document.querySelector('.hero .copy h1>.outline');if(!o||o.querySelector('ghost-w'))return;const t=o.textContent;const w=document.createElement('ghost-w');w.dataset.t=t;w.textContent=t;o.replaceChildren(w);})();
 (()=>{const hero=document.querySelector('.hero');if(!hero)return;hero.classList.add('in-view');new IntersectionObserver(es=>es.forEach(e=>hero.classList.toggle('in-view',e.isIntersecting))).observe(hero);
 const dust=hero.querySelectorAll('.cfg-dust i');dust.forEach((d,i)=>{const r=(a,b)=>a+Math.random()*(b-a);d.style.cssText=`--x:${r(4,96)}%;--y:${r(0,45)}%;--s:${r(2,4.5)}px;--d:${r(5,9)}s;--w:${-r(0,9)}s;--dx:${r(-30,30)}px`;});
-const copy=hero.querySelector('.copy'),out=hero.querySelector('.copy h1>.outline'),w=out&&out.querySelector('ghost-w');if(!copy||!out||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-const cv=document.createElement('canvas');cv.className='bolt-cv';cv.setAttribute('aria-hidden','true');copy.appendChild(cv);const ctx=cv.getContext('2d');let dpr=1,G=null,run=0;
-const layout=()=>{dpr=Math.min(devicePixelRatio||1,2);const cr=copy.getBoundingClientRect(),orr=out.getBoundingClientRect(),wr=(w||out).getBoundingClientRect(),cs=getComputedStyle(w||out),fs=parseFloat(cs.fontSize),bs=getComputedStyle(out,'::before'),lw=parseFloat(bs.width)||0,rr=parseFloat(bs.right)||0;
-const sR=orr.right-rr,sL=sR-lw,x0=Math.min(sL,wr.left)-.25*fs,x1=wr.right+.9*fs,y0=wr.top-1.5*fs,y1=wr.bottom+.5*fs;
-cv.style.left=(x0-cr.left)+'px';cv.style.top=(y0-cr.top)+'px';cv.style.width=(x1-x0)+'px';cv.style.height=(y1-y0)+'px';cv.width=Math.round((x1-x0)*dpr);cv.height=Math.round((y1-y0)*dpr);
-ctx.font=`${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;const m=ctx.measureText((w&&w.dataset.t)||out.textContent),fa=m.fontBoundingBoxAscent||fs*.9,fd=m.fontBoundingBoxDescent||fs*.25,aa=m.actualBoundingBoxAscent||fs*.72,base=wr.top+(wr.height-(fa+fd))/2+fa,capT=base-aa;
-const P=v=>v*dpr;G={fs:P(fs),start:P(sL-x0),wl:P(wr.left-x0),end:P(wr.right-x0+.55*fs),top:P(capT-y0),base:P(base-y0),stripe:P(orr.top+orr.height*.52-y0)};};
-document.fonts.ready.then(layout);layout();addEventListener('resize',layout);
-const R=(a,b)=>a+Math.random()*(b-a);let S=[];
-const seed=()=>{S=[];for(let i=0;i<8;i++)S.push({y:R(-.7,0),k:R(.006,.016),p:R(0,7),w:R(.8,2),A:R(.1,.25),wd:R(.22,.42),al:R(.07,.14),rise:R(.15,.35)});};
-const bolt=(x0,y0,x1,y1,amp,depth)=>{let pts=[[x0,y0],[x1,y1]];for(let d=0;d<depth;d++){const n=[pts[0]];for(let i=1;i<pts.length;i++){const [ax,ay]=pts[i-1],[bx,by]=pts[i];n.push([(ax+bx)/2+R(-amp,amp)*.25,(ay+by)/2+R(-amp,amp)]);n.push([bx,by]);}pts=n;amp*=.55;}return pts;};
-const zap=(pts,w,al,blur)=>{ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.lineWidth=w*3.4;ctx.strokeStyle=`rgba(212,255,0,${al*.55})`;ctx.shadowColor='#d4ff00';ctx.shadowBlur=blur;ctx.stroke();ctx.shadowBlur=0;ctx.lineWidth=w;ctx.strokeStyle=`rgba(255,255,236,${al})`;ctx.stroke();};
-const smooth=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t);};
-const draw=(head,e,sm,t,moving)=>{const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);if((e<=0&&sm<=0)||!G)return;ctx.globalCompositeOperation='lighter';ctx.lineCap='round';ctx.lineJoin='round';
-const {fs,start,top,base}=G,ch=base-top,from=start,to=Math.max(from+fs*.3,head),span=to-from,band=top+ch*.04,q=Math.max(.5,Math.min(1.2,fs/dpr/90));
-if(e>0){ctx.save();ctx.shadowColor='rgba(212,255,0,.95)';ctx.shadowBlur=ch*1.1;ctx.fillStyle=`rgba(212,255,0,${.2*e})`;ctx.beginPath();ctx.ellipse(from+span/2,band,span/2,ch*.22,0,0,7);ctx.fill();ctx.restore();
-for(let k=0;k<4;k++){const pts=bolt(from-R(0,.1)*fs,band+R(-.16,.12)*ch,to+R(-.05,.02)*fs,band+R(-.16,.12)*ch,ch*.55,6);zap(pts,R(.9,1.7)*dpr*q,e*R(.6,1),12*dpr);
-if(k<3){for(let j=0;j<2;j++){const p=pts[Math.floor(R(.08,.95)*pts.length)],up=Math.random()<.55,len=(up?R(.35,.95):R(.25,.6))*ch;zap(bolt(p[0],p[1],p[0]+R(-.3,.3)*fs,p[1]+(up?-len:len),ch*.12,4),R(.5,.9)*dpr*q,e*R(.4,.85),8*dpr);}}}
-if(moving){const g=ctx.createLinearGradient(to-fs*1.4,0,to,0);g.addColorStop(0,'rgba(220,255,60,0)');g.addColorStop(1,`rgba(250,255,215,${.75*e})`);ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(to-fs*.7,band,fs*.7,ch*.09,0,0,7);ctx.fill();
-const h=ctx.createRadialGradient(to,band,0,to,band,ch);h.addColorStop(0,`rgba(255,255,240,${.95*e})`);h.addColorStop(.25,`rgba(230,255,120,${.55*e})`);h.addColorStop(1,'rgba(212,255,0,0)');ctx.fillStyle=h;ctx.fillRect(to-ch,band-ch,ch*2,ch*2);}}
-if(sm>0){for(const f of S){const n=Math.max(8,Math.round(span/(ch*.22)));for(let i=0;i<=n;i++){const v=i/n,x=from+v*span,u=(x-from)/dpr,y=band+(f.y-t*f.rise)*ch+ch*f.A*Math.sin(u*f.k+f.p+t*f.w)+ch*.07*Math.sin(u*f.k*3.1-t*f.w*1.7),r=ch*f.wd*(1.1+.5*Math.sin(u*f.k*2.3+f.p*2+t*1.3)),al=f.al*sm*Math.sin(Math.PI*v)*(.6+.4*Math.sin(u*f.k*4+t*2+f.p));if(al<=.002)continue;const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(205,255,40,${al})`);g.addColorStop(.55,`rgba(190,255,20,${al*.35})`);g.addColorStop(1,'rgba(190,255,20,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);}}}
-ctx.globalCompositeOperation='source-over';};
-const strike=()=>{if(!hero.classList.contains('in-view')||document.hidden||!G)return;const id=++run,t0=performance.now(),D=3800;let last=0;seed();out.classList.add('charged');
-const step=t=>{if(id!==run)return;const k=(t-t0)/D;if(k>=1){draw(0,0,0,0,false);out.classList.remove('charged');return;}
-if(t-last>40){last=t;const tr=Math.min(1,k/.24),ease=tr*tr*(3-2*tr),head=G.start+(G.end-G.start)*ease,e=k<.04?k/.04:k<.5?1:Math.pow(Math.max(0,1-(k-.5)/.3),1.6),sm=smooth(.25,.55,k)*(1-smooth(.8,1,k));draw(head,e,sm,(t-t0)/1000,tr<1);if(k>.7)out.classList.remove('charged');}
-requestAnimationFrame(step);};requestAnimationFrame(step);};
-let timer=0;document.addEventListener('cutline:car-arrived',()=>{layout();strike();clearInterval(timer);timer=setInterval(strike,10000);});})();
+})();
