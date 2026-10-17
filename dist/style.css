@@ -661,3 +661,5 @@ ghost-w::before{animation:none}
 /* car is never taller than the stage (no roof crop); on wide desktop screens the stage grows down so the car keeps the laptop size */
 @media(min-width:901px){.hero-stage{container-type:size}}
 @media(min-width:1700px){.hero-stage{height:82%}}
+/* the end of the key word slides behind the car: the stage sits above the headline, everything else stays on top */
+@media(min-width:901px){.hero .copy{z-index:auto}.hero-stage{z-index:3;pointer-events:none}.hero-stage .cfg-panel{pointer-events:auto}.hero .copy>:not(h1):not(.bolt-cv){position:relative;z-index:4}.hero .copy>.bolt-cv{z-index:4}.hero .stats,.hero .signature{z-index:4}.hero-stage::after{background:linear-gradient(0deg,#070b08,transparent 15%)}}
