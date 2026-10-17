@@ -592,7 +592,6 @@ ghost-w::before{content:attr(data-t);position:absolute;left:-.7em;top:0;padding-
 .hero:not(.in-view) .cfg-car,.hero:not(.in-view) .cfg-ring,.hero:not(.in-view) .cfg-dust i,.hero:not(.in-view) ghost-w::after{animation-play-state:paused}
 /* Key word energy: on each speed-line kick a lime bloom lights up behind «IN VINYL» and electric arcs crackle along the top of the letters (drawn on a canvas by app.js). */
 ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-2;color:var(--lime);pointer-events:none;-webkit-user-select:none;user-select:none;filter:blur(16px);translate:0 -.12em;opacity:0;animation:energy 3.8s ease-out 1.5s infinite}
-ghost-w>canvas{position:absolute;left:-8%;top:-60%;width:116%;height:220%;z-index:-1;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 88%,transparent)}
 @keyframes energy{0%,38%{opacity:.12}47%{opacity:.75}70%{opacity:.35}100%{opacity:.12}}
 @media(max-width:900px){ghost-w::after{filter:blur(9px)}}
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car,.cfg-dust i,ghost-w::after{animation:none}.hero-stage.show-cfg .cfg-ring,.hero-stage.show-cfg .cfg-ring ellipse,.cfg-car.flash .cfg-ring,.cfg-car.flash .cfg-ring ellipse{animation:none}.cfg-ring{opacity:.25}.cfg-ring ellipse{stroke-dashoffset:0}}
@@ -610,3 +609,10 @@ ghost-w>canvas{position:absolute;left:-8%;top:-60%;width:116%;height:220%;z-inde
 @media(max-width:900px){@keyframes car-drive{0%{opacity:0;scale:.8;translate:10% -2%;rotate:y 14deg}14%{opacity:1}34%{scale:.82;translate:9% -2%;rotate:y 12deg}100%{opacity:1;scale:1;translate:0 0;rotate:y 0deg}}@keyframes car-sway{0%,100%{rotate:y 0deg;scale:1}50%{rotate:y -3deg;scale:1.02}}}
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car{animation:none;opacity:1}}
 .hero.cfg-on .signature{display:none}
+/* Lightning run: after the car arrives, an electric bolt starts at the speed line, runs right through the key word toward the car, crackles and fades (canvas drawn by app.js). */
+.copy>.bolt-cv{position:absolute;z-index:3;pointer-events:none}
+ghost-w::after{display:none}
+.hero .copy h1>.outline::before{transition:box-shadow .3s ease,filter .3s ease}
+.hero .copy h1>.outline.charged::before{box-shadow:0 0 12px 2px #d4ff00,0 0 34px 6px #d4ff0066;filter:brightness(1.5)}
+.hero .copy h1>.outline ghost-w{transition:text-shadow .4s ease}
+.hero .copy h1>.outline.charged ghost-w{text-shadow:0 0 16px #d4ff00aa,0 0 42px #d4ff0055}
