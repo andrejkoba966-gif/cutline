@@ -566,3 +566,32 @@ ghost-w::before{content:attr(data-t);position:absolute;left:-.7em;top:0;padding-
 @media(prefers-reduced-motion:reduce){ghost-w::before{animation:none}}
 /* Mobile process: steps stack like a deck while scrolling; each stuck step keeps its header strip visible above the next. */
 @media(max-width:600px){.pitlane{overflow:clip}.pitlane-route{gap:18px;grid-auto-rows:1fr}.route-stop{display:flex;flex-direction:column;position:sticky;top:76px;background:#111812;border:1px solid #d8eac326;box-shadow:0 -16px 30px -14px #000d}.route-stop:nth-child(2){top:128px}.route-stop:nth-child(3){top:180px}.route-stop:nth-child(4){top:232px}.route-stop:last-child{background:#1a2414;border-color:#caff0038}.route-marker{padding:15px 25px 14px;margin:0;min-height:52px;box-sizing:border-box}.route-marker::before{left:-27px;top:21px}.route-card,.route-stop:last-child .route-card,.route-stop:hover .route-card{background:none;border:0;box-shadow:none;transform:none;-webkit-backdrop-filter:none;backdrop-filter:none}.route-card{flex:1;padding-top:20px}.route-card h3{margin-top:18px}}
+/* Hero configurator, turntable feel: the car swings in with a light ring drawn on the floor in the chosen film colour; dust motes rise around it. */
+.cfg{perspective:1800px}
+.cfg-car{--ring:#d4ff00;transform-origin:55% 70%}
+.hero-stage.show-cfg .cfg-car{animation:car-turn 2.8s cubic-bezier(.25,.7,.2,1) .35s both,car-sway 12s ease-in-out 3.15s infinite}
+@keyframes car-turn{from{rotate:y 26deg;scale:.84;translate:-7% 3%}to{rotate:y 0deg;scale:1;translate:0 0}}
+@keyframes car-sway{0%,100%{rotate:y 0deg;scale:1}50%{rotate:y -3.5deg;scale:1.025}}
+.cfg-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;mix-blend-mode:screen}
+.cfg-ring ellipse{fill:none;stroke:var(--ring);stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke .7s ease}
+.ring-glow{stroke-width:46;filter:blur(18px);opacity:.85}
+.cfg-ring .ring-floor{fill:var(--ring);stroke:none;opacity:.11;filter:blur(34px);stroke-dasharray:none;animation:none!important;transition:fill .7s ease}
+.ring-core{stroke-width:6;filter:drop-shadow(0 0 8px var(--ring))}
+.hero-stage.show-cfg .cfg-ring{animation:ring-life 2.6s ease 1.1s both,ring-breathe 5s ease-in-out 3.7s infinite}
+.hero-stage.show-cfg .cfg-ring ellipse{animation:ring-draw 1.5s cubic-bezier(.45,0,.2,1) 1.1s both}
+.cfg-car.flash .cfg-ring{animation:ring-life 2.2s ease both,ring-breathe 5s ease-in-out 2.2s infinite}
+.cfg-car.flash .cfg-ring ellipse{animation:ring-draw2 1.1s cubic-bezier(.45,0,.2,1) both}
+@keyframes ring-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ring-draw2{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes ring-life{0%{opacity:0}12%,50%{opacity:1}100%{opacity:.55}}
+@keyframes ring-breathe{0%,100%{opacity:.55}50%{opacity:.32}}
+.cfg-dust{position:absolute;right:2%;bottom:6%;width:70%;height:55%;pointer-events:none;opacity:0;transition:opacity 1s ease 1.4s}
+.hero-stage.show-cfg .cfg-dust{opacity:1}
+.cfg-dust i{position:absolute;left:var(--x);bottom:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:var(--ring,#d4ff00);box-shadow:0 0 6px var(--ring,#d4ff00);opacity:0;animation:dust var(--d) linear var(--w) infinite}
+@keyframes dust{0%{opacity:0;translate:0 0}15%{opacity:.75}80%{opacity:.3}100%{opacity:0;translate:var(--dx) -150px}}
+.hero:not(.in-view) .cfg-car,.hero:not(.in-view) .cfg-ring,.hero:not(.in-view) .cfg-dust i,.hero:not(.in-view) ghost-w::after{animation-play-state:paused}
+/* Key word energy: a lime haze with electric wisps flares around «IN VINYL» on each speed-line kick. */
+ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;color:var(--lime);pointer-events:none;-webkit-user-select:none;user-select:none;filter:url(#energy);opacity:0;animation:energy 3.8s ease-out 1.5s infinite}
+@keyframes energy{0%,36%{opacity:.16}46%{opacity:.8}64%{opacity:.4}100%{opacity:.16}}
+@media(max-width:900px){ghost-w::after{filter:url(#energy-m)}}
+@media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car,.cfg-dust i,ghost-w::after{animation:none}.hero-stage.show-cfg .cfg-ring,.hero-stage.show-cfg .cfg-ring ellipse,.cfg-car.flash .cfg-ring,.cfg-car.flash .cfg-ring ellipse{animation:none}.cfg-ring{opacity:.25}.cfg-ring ellipse{stroke-dashoffset:0}}
