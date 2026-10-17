@@ -54,15 +54,10 @@ const startAuto=()=>{stopAuto();if(matchMedia('(prefers-reduced-motion: reduce)'
 sw.forEach((b,i)=>b.addEventListener('click',()=>select(i,true)));
 cfg.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(current+(e.key==='ArrowRight'?1:-1),true);}});
 let sx=null;cfg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});cfg.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)select(current+(dx<0?1:-1),true);sx=null;});
-const film=car.querySelector('.cfg-film');let done=false;
-const hero=document.querySelector('.hero');
-/* One timeline: the speed line charges while the car backs in (bound to the film clock); the frame the car stops, the key word slams in, a glint runs across it, then the light jumps onto the car wrap and the floor ring. Delays live in CSS (.hero.hit …). */
-const finish=()=>{if(done)return;done=true;hero.style.setProperty('--drive','1');car.classList.add('still');hero.classList.add('hit');setTimeout(startAuto,6000);if(film){film.pause();}
-if(matchMedia('(pointer: fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let raf=0,mx=0,my=0;hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();mx=(e.clientX-r.left)/r.width*2-1;my=(e.clientY-r.top)/r.height*2-1;if(!raf)raf=requestAnimationFrame(()=>{raf=0;car.style.setProperty('--mx',mx.toFixed(3));car.style.setProperty('--my',my.toFixed(3));});});hero.addEventListener('pointerleave',()=>{car.style.setProperty('--mx','0');car.style.setProperty('--my','0');});}};
-const show=()=>{hero.classList.add('cfg-on');stage.classList.add('show-cfg');
+const film=car.querySelector('.cfg-film');let arrived=false,done=false;const arrive=()=>{if(arrived)return;arrived=true;document.dispatchEvent(new Event('cutline:car-arrived'));};
+const finish=()=>{if(done)return;done=true;car.classList.add('still');setTimeout(arrive,250);setTimeout(startAuto,5600);if(film){film.pause();}};
+const show=()=>{document.querySelector('.hero').classList.add('cfg-on');stage.classList.add('show-cfg');
 if(!film||matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
-hero.classList.add('seq','wseq');const tick=()=>{if(done)return;const d=film.duration||2.8;hero.style.setProperty('--drive',Math.min(1,film.currentTime/d).toFixed(3));requestAnimationFrame(tick);};requestAnimationFrame(tick);
-const guard=setTimeout(()=>{if(film.paused||film.currentTime===0)finish();},2500);film.addEventListener('playing',()=>clearTimeout(guard),{once:true});
 film.addEventListener('ended',finish);film.addEventListener('error',finish,true);
 const p=film.play();if(p&&p.catch)p.catch(finish);};
 requestAnimationFrame(show);
@@ -72,9 +67,32 @@ requestAnimationFrame(show);
 (()=>{const o=document.querySelector('.hero .copy h1>.outline');if(!o||o.querySelector('ghost-w'))return;const t=o.textContent;const w=document.createElement('ghost-w');w.dataset.t=t;w.textContent=t;o.replaceChildren(w);})();
 (()=>{const hero=document.querySelector('.hero');if(!hero)return;hero.classList.add('in-view');new IntersectionObserver(es=>es.forEach(e=>hero.classList.toggle('in-view',e.isIntersecting))).observe(hero);
 const dust=hero.querySelectorAll('.cfg-dust i');dust.forEach((d,i)=>{const r=(a,b)=>a+Math.random()*(b-a);d.style.cssText=`--x:${r(4,96)}%;--y:${r(0,45)}%;--s:${r(2,4.5)}px;--d:${r(5,9)}s;--w:${-r(0,9)}s;--dx:${r(-30,30)}px`;});
-})();
-/* Headline kinetic type: lines cascade in letter by letter; the key word drops in as an empty outline while the car backs in, and gets "wrapped" with lime film the frame the car parks (CSS: .hero.wseq / .hero.hit). */
-(()=>{const h1=document.querySelector('.hero .copy h1');if(!h1||h1.classList.contains('split'))return;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const wrap=(el,tag,line)=>{const t=el.textContent;el.textContent='';[...t].forEach((c,i)=>{const s=document.createElement(tag);s.textContent=c;s.style.setProperty('--i',i);if(line!=null)s.style.setProperty('--l',line);el.appendChild(s);});el.setAttribute('aria-label',t);};
-if(!reduce){[...h1.children].forEach((sp,li)=>{if(sp.classList.contains('outline')){const g=sp.querySelector('ghost-w');if(g)wrap(g,'l-c');}else wrap(sp,'h-c',li);});h1.setAttribute('aria-label',[...h1.children].map(x=>x.getAttribute('aria-label')||x.textContent).join(' '));}
-h1.classList.add('split');})();
+const copy=hero.querySelector('.copy'),out=hero.querySelector('.copy h1>.outline'),w=out&&out.querySelector('ghost-w');if(!copy||!out||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+const cv=document.createElement('canvas');cv.className='bolt-cv';cv.setAttribute('aria-hidden','true');copy.appendChild(cv);const ctx=cv.getContext('2d');let dpr=1,G=null,run=0;
+const layout=()=>{dpr=Math.min(devicePixelRatio||1,2);const cr=copy.getBoundingClientRect(),orr=out.getBoundingClientRect(),wr=(w||out).getBoundingClientRect(),cs=getComputedStyle(w||out),fs=parseFloat(cs.fontSize),bs=getComputedStyle(out,'::before'),lw=parseFloat(bs.width)||0,rr=parseFloat(bs.right)||0;
+const sR=orr.right-rr,sL=sR-lw,x0=Math.min(sL,wr.left)-.25*fs,x1=wr.right+.9*fs,y0=wr.top-1.5*fs,y1=wr.bottom+.5*fs;
+cv.style.left=(x0-cr.left)+'px';cv.style.top=(y0-cr.top)+'px';cv.style.width=(x1-x0)+'px';cv.style.height=(y1-y0)+'px';cv.width=Math.round((x1-x0)*dpr);cv.height=Math.round((y1-y0)*dpr);
+ctx.font=`${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;const m=ctx.measureText((w&&w.dataset.t)||out.textContent),fa=m.fontBoundingBoxAscent||fs*.9,fd=m.fontBoundingBoxDescent||fs*.25,aa=m.actualBoundingBoxAscent||fs*.72,base=wr.top+(wr.height-(fa+fd))/2+fa,capT=base-aa;
+const P=v=>v*dpr;G={fs:P(fs),start:P(sL-x0),wl:P(wr.left-x0),end:P(wr.right-x0+.55*fs),top:P(capT-y0),base:P(base-y0),stripe:P(orr.top+orr.height*.52-y0)};};
+document.fonts.ready.then(layout);layout();addEventListener('resize',layout);
+const R=(a,b)=>a+Math.random()*(b-a);let S=[];
+const seed=()=>{S=[];for(let i=0;i<8;i++)S.push({y:R(-.6,0),k:R(.006,.016),p:R(0,7),w:R(.8,2),A:R(.1,.22),wd:R(.2,.36),al:R(.05,.1),rise:R(.2,.4)});};
+const bolt=(x0,y0,x1,y1,amp,depth)=>{let pts=[[x0,y0],[x1,y1]];for(let d=0;d<depth;d++){const n=[pts[0]];for(let i=1;i<pts.length;i++){const [ax,ay]=pts[i-1],[bx,by]=pts[i];n.push([(ax+bx)/2+R(-amp,amp)*.25,(ay+by)/2+R(-amp,amp)]);n.push([bx,by]);}pts=n;amp*=.55;}return pts;};
+const zap=(pts,w,al,blur)=>{ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.lineWidth=w*3.4;ctx.strokeStyle=`rgba(212,255,0,${al*.55})`;ctx.shadowColor='#d4ff00';ctx.shadowBlur=blur;ctx.stroke();ctx.shadowBlur=0;ctx.lineWidth=w;ctx.strokeStyle=`rgba(255,255,236,${al})`;ctx.stroke();};
+const smooth=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t);};
+const draw=(head,e,sm,t,moving)=>{const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);if((e<=0&&sm<=0)||!G)return;ctx.globalCompositeOperation='lighter';ctx.lineCap='round';ctx.lineJoin='round';
+const {fs,wl,top,base}=G,ch=base-top,from=wl-fs*.25,to=Math.max(from+fs*.3,head),span=to-from,band=top+ch*.04,q=Math.max(.5,Math.min(1.2,fs/dpr/90));
+if(e>0){ctx.save();ctx.shadowColor='rgba(212,255,0,.95)';ctx.shadowBlur=ch*1.1;ctx.fillStyle=`rgba(212,255,0,${.12*e})`;ctx.beginPath();ctx.ellipse(from+span/2,band,span/2,ch*.22,0,0,7);ctx.fill();ctx.restore();
+const now=performance.now();if(!shapes||now-shapeT>90){shapeT=now;shapes=[];shapes.span=span;for(let k=0;k<3;k++){const pts=bolt(0,R(-.14,.1)*ch,span,R(-.14,.1)*ch,ch*.42,6);const br=[];if(k<2)for(let j=0;j<2;j++){const i=Math.floor(R(.1,.95)*pts.length),up=Math.random()<.6,len=(up?R(.3,.8):R(.2,.5))*ch;br.push({i,pts:bolt(0,0,R(-.25,.25)*fs,up?-len:len,ch*.1,4)});}shapes.push({pts,br,w:R(.8,1.5),a:R(.6,1)});}}
+const sx=span/(shapes.span||span);for(const sh of shapes){const pts=sh.pts.map(([u,v])=>[from+u*sx,band+v]);zap(pts,sh.w*dpr*q,e*sh.a*R(.8,1),10*dpr);for(const b of sh.br){const o=pts[Math.min(b.i,pts.length-1)];zap(b.pts.map(([x,y])=>[o[0]+x,o[1]+y]),.7*dpr*q,e*sh.a*.7,6*dpr);}}
+if(moving){const g=ctx.createLinearGradient(to-fs*1.4,0,to,0);g.addColorStop(0,'rgba(220,255,60,0)');g.addColorStop(1,`rgba(250,255,215,${.75*e})`);ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(to-fs*.7,band,fs*.7,ch*.09,0,0,7);ctx.fill();
+const h=ctx.createRadialGradient(to,band,0,to,band,ch);h.addColorStop(0,`rgba(255,255,240,${.95*e})`);h.addColorStop(.25,`rgba(230,255,120,${.55*e})`);h.addColorStop(1,'rgba(212,255,0,0)');ctx.fillStyle=h;ctx.fillRect(to-ch,band-ch,ch*2,ch*2);}}
+if(sm>0){for(const f of S){const n=Math.max(8,Math.round(span/(ch*.22)));for(let i=0;i<=n;i++){const v=i/n,x=from+v*span,u=(x-from)/dpr,y=band+(f.y-t*f.rise)*ch+ch*f.A*Math.sin(u*f.k+f.p+t*f.w)+ch*.07*Math.sin(u*f.k*3.1-t*f.w*1.7),r=ch*f.wd*(1.1+.5*Math.sin(u*f.k*2.3+f.p*2+t*1.3)),al=f.al*sm*Math.sin(Math.PI*v)*(.6+.4*Math.sin(u*f.k*4+t*2+f.p));if(al<=.002)continue;const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(205,255,40,${al})`);g.addColorStop(.55,`rgba(190,255,20,${al*.35})`);g.addColorStop(1,'rgba(190,255,20,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);}}}
+ctx.globalCompositeOperation='source-over';};
+let shapes=null,shapeT=0;const strike=()=>{if(!G)return;const id=++run,t0=performance.now(),D=1900;let last=0;seed();shapes=null;out.classList.add('charged');
+const step=t=>{if(id!==run)return;const k=(t-t0)/D;if(k>=1){draw(0,0,0,0,false);out.classList.remove('charged');return;}
+if(t-last>33){last=t;const tr=Math.min(1,k/.2),ease=1-Math.pow(1-tr,3),head=G.wl+(G.end-G.wl)*ease,e=k<.03?k/.03:k<.42?1:Math.pow(Math.max(0,1-(k-.42)/.38),1.5),sm=smooth(.2,.45,k)*(1-smooth(.75,1,k));draw(head,e,sm,(t-t0)/1000,tr<1);if(k>.7)out.classList.remove('charged');}
+requestAnimationFrame(step);};requestAnimationFrame(step);};
+/* one rhythm: the light runs down the speed line (CSS .kick, 1.6 s), hits the word at 42 % and the lightning fires on that impact */
+const IMPACT=.42*1600;let timer=0,kt=0;const kick=()=>{if(!hero.classList.contains('in-view')||document.hidden)return;layout();hero.classList.remove('kick');void hero.offsetWidth;hero.classList.add('kick');clearTimeout(kt);kt=setTimeout(strike,IMPACT);};
+document.addEventListener('cutline:car-arrived',()=>{kick();clearInterval(timer);timer=setInterval(kick,8000);});})();
