@@ -54,15 +54,6 @@ const startAuto=()=>{stopAuto();if(matchMedia('(prefers-reduced-motion: reduce)'
 sw.forEach((b,i)=>b.addEventListener('click',()=>select(i,true)));
 cfg.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();select(current+(e.key==='ArrowRight'?1:-1),true);}});
 let sx=null;cfg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});cfg.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)select(current+(dx<0?1:-1),true);sx=null;});
-/* Desktop car placement follows the headline: the car's nose tucks slightly under the end of the key word on any screen/language;
-   size is capped by the hero height so large monitors don't blow it up. Tweak: NOSE (car front inside the 2:1 frame), OVERLAP (in em of the word), MAXH (share of hero height). */
-const NOSE=.075,OVERLAP=.35,MAXH=.62,MAXW=1480;
-const place=()=>{const P=['left','top','width','right','bottom'];if(innerWidth<=900){P.forEach(k=>car.style.removeProperty(k));return;}const word=document.querySelector('.hero .copy h1>.outline ghost-w')||document.querySelector('.hero .copy h1>.outline');const st=document.querySelector('.hero .stats');if(!word)return;
-const cr=cfg.getBoundingClientRect(),hr=document.querySelector('.hero').getBoundingClientRect(),wr=word.getBoundingClientRect(),fs=parseFloat(getComputedStyle(word).fontSize)||80;
-const noseX=wr.right-fs*OVERLAP,avail=hr.right+hr.width*.04-noseX;let w=Math.min(avail/(1-NOSE),hr.height*MAXH*2,MAXW);const h=w/2;
-const lim=st?st.getBoundingClientRect().top+h*.08:hr.bottom-h*.05;let top=Math.max(hr.top+8,Math.min(wr.top-h*.32,lim-h));
-car.style.left=(noseX-w*NOSE-cr.left).toFixed(1)+'px';car.style.top=(top-cr.top).toFixed(1)+'px';car.style.width=w.toFixed(1)+'px';car.style.right='auto';car.style.bottom='auto';};
-place();addEventListener('resize',place);document.fonts.ready.then(place);setTimeout(place,1200);
 const film=car.querySelector('.cfg-film');let arrived=false,done=false;const arrive=()=>{if(arrived)return;arrived=true;document.dispatchEvent(new Event('cutline:car-arrived'));};
 const finish=()=>{if(done)return;done=true;car.classList.add('still');setTimeout(arrive,250);setTimeout(startAuto,5600);if(film){film.pause();}};
 const show=()=>{document.querySelector('.hero').classList.add('cfg-on');stage.classList.add('show-cfg');
