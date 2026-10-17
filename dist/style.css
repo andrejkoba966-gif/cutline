@@ -610,7 +610,6 @@ ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-2;co
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car{animation:none;opacity:1}}
 .hero.cfg-on .signature{display:none}
 /* Lightning run: after the car arrives, an electric bolt starts at the speed line, runs right through the key word toward the car, crackles and fades (canvas drawn by app.js). */
-.copy>.bolt-cv{position:absolute;z-index:3;pointer-events:none}
 ghost-w::after{display:none}
 .hero .copy h1>.outline::before{transition:box-shadow .3s ease,filter .3s ease}
 .hero .copy h1>.outline.charged::before{box-shadow:0 0 12px 2px #d4ff00,0 0 34px 6px #d4ff0066;filter:brightness(1.5)}
