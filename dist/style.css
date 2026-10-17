@@ -654,3 +654,7 @@ ghost-w::after{display:none}
 .hero.kick .copy h1>.outline::after{animation:speed-pulse 1.6s cubic-bezier(.5,0,.75,.4) both}
 ghost-w::before{animation:none}
 .hero.kick ghost-w::before{animation:smear 1.6s ease-out both}
+/* Bigger car, driving forward out of the studio (cropped Flow clip, 2:1). Size/position here. */
+.hero-stage .cfg-car,.hero-stage.show-cfg .cfg-car,.hero-stage.show-cfg .cfg-car.still{aspect-ratio:2/1;width:102%;right:-9%;bottom:4%;top:auto;left:auto;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 90%,transparent),linear-gradient(180deg,transparent,#000 16%,#000 78%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 14%,#000 90%,transparent),linear-gradient(180deg,transparent,#000 16%,#000 78%,transparent);mask-composite:intersect}
+@media(max-width:900px){.hero-stage .cfg-car,.hero-stage.show-cfg .cfg-car,.hero-stage.show-cfg .cfg-car.still{width:128%;left:-14%;right:auto;top:0;bottom:auto}}
+.hero-stage.show-cfg .cfg-car.still{animation:none}
