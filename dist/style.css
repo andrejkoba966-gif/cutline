@@ -660,9 +660,7 @@ ghost-w::before{animation:none}
 .hero-stage.show-cfg .cfg-car.still{animation:none}
 /* car is never taller than the stage (no roof crop); on wide desktop screens the stage grows down so the car keeps the laptop size */
 @media(min-width:901px){.hero-stage{container-type:size}}
-@media(min-width:1700px){.hero-stage{height:82%}.hero-stage .cfg-car,.hero-stage.show-cfg .cfg-car,.hero-stage.show-cfg .cfg-car.still{right:-4%}}
+@media(min-width:1700px){.hero-stage{height:82%}}
 /* desktop configurator: a slim dock on the studio floor under the car, so it never covers the body */
 @media(min-width:901px){.hero-stage .cfg-panel{display:flex;align-items:center;gap:16px;left:58%;right:auto;top:auto;bottom:5%;width:auto;padding:8px 18px 8px 10px;border-radius:999px;transform:translate(-50%,14px)}.hero-stage.show-cfg .cfg-panel{transform:translate(-50%,0)}.hero-stage .cfg-swatches{order:0;margin:0;gap:8px}.hero-stage .cfg-name{order:1;font-size:14px;white-space:nowrap;min-width:9.5em}.hero-stage .cfg-fin{display:none}.hero-stage .cfg-top{order:2;margin:0;padding-left:16px;border-left:1px solid #ffffff1f}.hero-stage .cfg-top>span{display:none}.hero-stage .cfg-count{white-space:nowrap}}@media(min-width:1700px){.hero-stage .cfg-panel{bottom:calc(5% + 34px)}}
 @media(min-width:901px){.hero-stage .cfg-top{display:none}.hero-stage .cfg-name{min-width:8.6em}}
-.car-front{display:none}
-@media(min-width:901px){.car-front{display:block;position:absolute;z-index:2;pointer-events:none;opacity:0;transition:opacity .6s ease;-webkit-mask-image:url('assets/car-front.png'),linear-gradient(90deg,transparent,#000 14%,#000 90%,transparent),linear-gradient(180deg,transparent,#000 16%,#000 78%,transparent);-webkit-mask-size:100% 100%;-webkit-mask-composite:source-in;mask-image:url('assets/car-front.png'),linear-gradient(90deg,transparent,#000 14%,#000 90%,transparent),linear-gradient(180deg,transparent,#000 16%,#000 78%,transparent);mask-size:100% 100%;mask-composite:intersect}.car-front.on{opacity:1}.car-front img,.car-front span{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}}
