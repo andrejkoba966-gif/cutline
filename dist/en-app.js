@@ -104,3 +104,10 @@ draw(s+off,front,amp,thin);if(k>.75)out.classList.remove('charged');requestAnima
 /* one rhythm: the light runs down the speed line (CSS .kick, 1.6 s), hits the word at 42 % and the energy blooms from that impact */
 const IMPACT=.42*1600;let timer=0,kt=0;const kick=()=>{if(!hero.classList.contains('in-view')||document.hidden)return;layout();hero.classList.remove('kick');void hero.offsetWidth;hero.classList.add('kick');clearTimeout(kt);kt=setTimeout(strike,IMPACT);};
 document.addEventListener('cutline:car-arrived',()=>{kick();clearInterval(timer);timer=setInterval(kick,10000);});})();
+
+/* the end of the key word tucks behind the parked car: a copy of the still car, cut to the body silhouette and clipped to the headline box, sits between the headline and the energy canvas */
+(()=>{const car=document.querySelector('.hero-stage .cfg-car'),copy=document.querySelector('.hero .copy'),h1=copy&&copy.querySelector('h1');if(!car||!h1)return;const mq=matchMedia('(min-width:901px)');
+const front=car.cloneNode(true);front.className='car-front';front.setAttribute('aria-hidden','true');front.querySelectorAll('video,.cfg-ring,.cfg-shine').forEach(e=>e.remove());copy.appendChild(front);
+const place=()=>{if(!mq.matches)return;const c=car.getBoundingClientRect(),p=copy.getBoundingClientRect(),h=h1.getBoundingClientRect();Object.assign(front.style,{left:c.left-p.left+'px',top:c.top-p.top+'px',width:c.width+'px',height:c.height+'px',clipPath:`inset(${Math.max(0,h.top-c.top-20)}px ${Math.max(0,c.right-h.right)}px ${Math.max(0,c.bottom-h.bottom-10)}px 0)`});};
+const sync=()=>{front.style.setProperty('--tint',getComputedStyle(car).getPropertyValue('--tint'));front.classList.toggle('on',mq.matches&&car.classList.contains('still'));place();};
+new MutationObserver(sync).observe(car,{attributes:true,attributeFilter:['class','style']});addEventListener('resize',place);mq.addEventListener('change',sync);if(document.fonts)document.fonts.ready.then(place);sync();})();
