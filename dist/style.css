@@ -596,3 +596,17 @@ ghost-w>canvas{position:absolute;left:-8%;top:-60%;width:116%;height:220%;z-inde
 @keyframes energy{0%,38%{opacity:.12}47%{opacity:.75}70%{opacity:.35}100%{opacity:.12}}
 @media(max-width:900px){ghost-w::after{filter:blur(9px)}}
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car,.cfg-dust i,ghost-w::after{animation:none}.hero-stage.show-cfg .cfg-ring,.hero-stage.show-cfg .cfg-ring ellipse,.cfg-car.flash .cfg-ring,.cfg-car.flash .cfg-ring ellipse{animation:none}.cfg-ring{opacity:.25}.cfg-ring ellipse{stroke-dashoffset:0}}
+/* Hero without the film: the configurator is the first frame. The car waits small on the right, a light ring is drawn under it, then it drives toward the viewer and the key word fires its arcs as it arrives. */
+.cfg,.hero-stage.show-cfg .cfg{clip-path:none;transition:none}
+.hero-stage.show-cfg .cfg-wipe{animation:none}
+.cfg-car,.hero-stage.show-cfg .cfg-car{transition:none;transform:none;opacity:0;transform-origin:62% 82%}
+.hero-stage.show-cfg .cfg-car{animation:car-drive 3.6s cubic-bezier(.55,0,.2,1) .15s both,car-sway 12s ease-in-out 4s infinite}
+@keyframes car-drive{0%{opacity:0;scale:.72;translate:15% -3%;rotate:y 16deg}14%{opacity:1}34%{scale:.75;translate:13% -3%;rotate:y 14deg}100%{opacity:1;scale:1.08;translate:-5% 2%;rotate:y 0deg}}
+@keyframes car-sway{0%,100%{rotate:y 0deg;scale:1.08}50%{rotate:y -3deg;scale:1.1}}
+.hero-stage.show-cfg .cfg-ring{animation:ring-life 3.4s ease .55s both,ring-breathe 5s ease-in-out 3.95s infinite}
+.hero-stage.show-cfg .cfg-ring ellipse{animation:ring-draw 1.2s cubic-bezier(.45,0,.2,1) .55s both}
+.hero-stage .cfg-panel{transition-delay:.35s}
+.cfg-dust{transition-delay:1.6s}
+@media(max-width:900px){@keyframes car-drive{0%{opacity:0;scale:.8;translate:10% -2%;rotate:y 14deg}14%{opacity:1}34%{scale:.82;translate:9% -2%;rotate:y 12deg}100%{opacity:1;scale:1;translate:0 0;rotate:y 0deg}}@keyframes car-sway{0%,100%{rotate:y 0deg;scale:1}50%{rotate:y -3deg;scale:1.02}}}
+@media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car{animation:none;opacity:1}}
+.hero.cfg-on .signature{display:none}
