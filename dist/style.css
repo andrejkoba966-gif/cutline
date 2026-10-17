@@ -622,17 +622,18 @@ ghost-w::after{display:none}
 .cfg-car.still .cfg-film{opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s}
 .cfg-wrap,.cfg-tint{transition:opacity .6s ease,filter .7s ease,background-color .7s ease}
 .cfg-car:not(.still) .cfg-shine{display:none}
-/* Car film: the car reverses into its spot and switches its lights off; the film ends on the configurator frame. Then the floor ring draws and the car sways gently. */
+/* Car film: the car backs into its spot, then switches its headlights on; the film ends on the configurator frame (lit). The headlights trigger the floor ring and the key-word energy. Lime state shows the untouched frame; other films tint the wrap layer. */
+.cfg-car.native .cfg-wrap,.cfg-car.native .cfg-tint{opacity:0}
 .hero-stage.show-cfg .cfg-car{animation:car-in 1s ease .05s both}
 .hero-stage.show-cfg .cfg-car.still{animation:car-sway2 10s ease-in-out .6s infinite}
 @keyframes car-in{from{opacity:0;filter:brightness(.3)}to{opacity:1;filter:none}}
 @keyframes car-sway2{0%,100%{rotate:y 0deg}50%{rotate:y -4deg}}
 .hero-stage.show-cfg .cfg-ring,.hero-stage.show-cfg .cfg-ring ellipse{animation:none}
 .cfg-ring{opacity:0}
-.hero-stage.show-cfg .cfg-car.still .cfg-ring{animation:ring-life 3s ease .1s both,ring-breathe 5s ease-in-out 3.1s infinite}
-.hero-stage.show-cfg .cfg-car.still .cfg-ring ellipse{animation:ring-draw 1.2s cubic-bezier(.45,0,.2,1) .1s both}
-.hero-stage.show-cfg .cfg-car.still.flash .cfg-ring{animation:ring-life 2.2s ease both,ring-breathe 5s ease-in-out 2.2s infinite}
-.hero-stage.show-cfg .cfg-car.still.flash .cfg-ring ellipse{animation:ring-draw2 1.1s cubic-bezier(.45,0,.2,1) both}
+.hero-stage.show-cfg .cfg-car.lit .cfg-ring{animation:ring-life 3s ease .1s both,ring-breathe 5s ease-in-out 3.1s infinite}
+.hero-stage.show-cfg .cfg-car.lit .cfg-ring ellipse{animation:ring-draw 1.2s cubic-bezier(.45,0,.2,1) .1s both}
+.hero-stage.show-cfg .cfg-car.lit.flash .cfg-ring{animation:ring-life 2.2s ease both,ring-breathe 5s ease-in-out 2.2s infinite}
+.hero-stage.show-cfg .cfg-car.lit.flash .cfg-ring ellipse{animation:ring-draw2 1.1s cubic-bezier(.45,0,.2,1) both}
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car,.hero-stage.show-cfg .cfg-car.still{animation:none;opacity:1}.cfg-ring{opacity:.5}}
 /* Compact colour panel */
 .hero-stage .cfg-panel{width:auto;max-width:none;padding:12px 14px 12px;border-radius:14px}
