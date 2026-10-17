@@ -590,8 +590,9 @@ ghost-w::before{content:attr(data-t);position:absolute;left:-.7em;top:0;padding-
 .cfg-dust i{position:absolute;left:var(--x);bottom:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:var(--ring,#d4ff00);box-shadow:0 0 6px var(--ring,#d4ff00);opacity:0;animation:dust var(--d) linear var(--w) infinite}
 @keyframes dust{0%{opacity:0;translate:0 0}15%{opacity:.75}80%{opacity:.3}100%{opacity:0;translate:var(--dx) -150px}}
 .hero:not(.in-view) .cfg-car,.hero:not(.in-view) .cfg-ring,.hero:not(.in-view) .cfg-dust i,.hero:not(.in-view) ghost-w::after{animation-play-state:paused}
-/* Key word energy: a lime haze with electric wisps flares around «IN VINYL» on each speed-line kick. */
-ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;color:var(--lime);pointer-events:none;-webkit-user-select:none;user-select:none;filter:url(#energy);opacity:0;animation:energy 3.8s ease-out 1.5s infinite}
-@keyframes energy{0%,36%{opacity:.16}46%{opacity:.8}64%{opacity:.4}100%{opacity:.16}}
-@media(max-width:900px){ghost-w::after{filter:url(#energy-m)}}
+/* Key word energy: on each speed-line kick a lime bloom lights up behind «IN VINYL» and electric arcs crackle along the top of the letters (drawn on a canvas by app.js). */
+ghost-w::after{content:attr(data-t);position:absolute;left:0;top:0;z-index:-2;color:var(--lime);pointer-events:none;-webkit-user-select:none;user-select:none;filter:blur(16px);translate:0 -.12em;opacity:0;animation:energy 3.8s ease-out 1.5s infinite}
+ghost-w>canvas{position:absolute;left:-8%;top:-60%;width:116%;height:220%;z-index:-1;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 88%,transparent)}
+@keyframes energy{0%,38%{opacity:.12}47%{opacity:.75}70%{opacity:.35}100%{opacity:.12}}
+@media(max-width:900px){ghost-w::after{filter:blur(9px)}}
 @media(prefers-reduced-motion:reduce){.hero-stage.show-cfg .cfg-car,.cfg-dust i,ghost-w::after{animation:none}.hero-stage.show-cfg .cfg-ring,.hero-stage.show-cfg .cfg-ring ellipse,.cfg-car.flash .cfg-ring,.cfg-car.flash .cfg-ring ellipse{animation:none}.cfg-ring{opacity:.25}.cfg-ring ellipse{stroke-dashoffset:0}}
