@@ -670,3 +670,28 @@ ghost-w::before{animation:none}
 .hero-stage.show-cfg .cfg-car.still{animation:none;rotate:y calc(var(--mx,0) * 5deg);translate:calc(var(--mx,0) * -14px) calc(var(--my,0) * -8px);transition:rotate .7s cubic-bezier(.2,.8,.2,1),translate .7s cubic-bezier(.2,.8,.2,1)}
 @media(prefers-reduced-motion:reduce){.hero.seq:not(.hit) .copy h1>.outline ghost-w{opacity:1}.hero.hit ghost-w::after{display:none}}
 .hero-stage.show-cfg .cfg-car.still.flash .cfg-shine{animation:cfg-shine-pos .9s ease-out both}
+/* ===== Headline kinetic type + "vinyl wrap" fill on the key word ===== */
+.hx .hero .copy h1:not(.split){visibility:hidden;animation:hx-show 0s 3s forwards}
+@keyframes hx-show{to{visibility:visible}}
+.hero .copy h1 h-c,.hero .copy h1 l-c{display:inline-block;white-space:pre}
+.hero .copy h1.split h-c{animation:char-in .5s cubic-bezier(.16,.95,.25,1) both;animation-delay:calc(var(--l,0) * 140ms + var(--i) * 24ms + 80ms)}
+@keyframes char-in{0%{opacity:0;transform:translate3d(0,.62em,0) skewX(-16deg) scaleY(1.25);filter:blur(.05em)}55%{opacity:1;filter:none}100%{opacity:1;transform:none}}
+/* key word: empty outline that drops in letter by letter while the car reverses */
+.hero.wseq .copy h1>.outline ghost-w,.hero.wseq.hit .copy h1>.outline ghost-w{opacity:1;animation:none;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:.024em #d4ff00}
+.hero.wseq .copy h1>.outline l-c{animation:outline-drop .42s cubic-bezier(.2,1.25,.35,1) both;animation-delay:calc(.55s + var(--i) * 55ms)}
+@keyframes outline-drop{0%{opacity:0;transform:translate3d(0,-.75em,0) rotate(-8deg) scale(1.15)}60%{opacity:1}100%{opacity:1;transform:none}}
+.hero.wseq:not(.hit) ghost-w::before{opacity:0}
+/* the frame the car parks: lime film is squeegeed over the word, bright edge leading */
+.hero.wseq .copy h1>.outline ghost-w::after{display:block;content:attr(data-t);position:absolute;left:0;top:0;padding-right:.25em;z-index:1;translate:none;filter:none;opacity:1;-webkit-text-stroke:0;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(90deg,#d4ff00 0 45%,#f6ffcf 46.2%,#ffffff 46.8%,#d4ff00aa 47.6%,transparent 48.6%) no-repeat;background-size:220% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;animation:none}
+.hero.wseq.hit .copy h1>.outline ghost-w::after{animation:wrap-fill .5s cubic-bezier(.55,0,.25,1) both}
+@keyframes wrap-fill{from{background-position:100% 0}to{background-position:0 0}}
+.hero.wseq.hit .copy h1>.outline ghost-w{animation:wrap-flex .5s cubic-bezier(.55,0,.25,1) both}
+@keyframes wrap-flex{0%{transform:none}55%{transform:skewX(-4deg) scaleX(1.025)}100%{transform:none}}
+.hero.wseq.hit ghost-w::before{animation:smear-hit .9s ease-out .25s both}
+/* light continues from the word onto the car */
+.hero-stage.show-cfg .cfg-car.still .cfg-shine{animation:cfg-shine-pos .9s cubic-bezier(.4,0,.2,1) .42s both}
+.hero.hit .cfg-car::after{animation:bloom 1.4s ease-out .4s both}
+.hero-stage.show-cfg .cfg-car.still:not(.flash) .cfg-ring{animation:ring-life 3s ease .5s both,ring-breathe 5s ease-in-out 3.5s infinite}
+.hero-stage.show-cfg .cfg-car.still:not(.flash) .cfg-ring ellipse{animation:ring-draw 1s cubic-bezier(.45,0,.2,1) .5s both}
+.hero-stage.show-cfg .cfg-car.still.flash .cfg-shine{animation:cfg-shine-pos .9s ease-out both}
+.hero.wseq.seq:not(.hit) .copy h1>.outline ghost-w{opacity:1}

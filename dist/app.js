@@ -61,7 +61,7 @@ const finish=()=>{if(done)return;done=true;hero.style.setProperty('--drive','1')
 if(matchMedia('(pointer: fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let raf=0,mx=0,my=0;hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();mx=(e.clientX-r.left)/r.width*2-1;my=(e.clientY-r.top)/r.height*2-1;if(!raf)raf=requestAnimationFrame(()=>{raf=0;car.style.setProperty('--mx',mx.toFixed(3));car.style.setProperty('--my',my.toFixed(3));});});hero.addEventListener('pointerleave',()=>{car.style.setProperty('--mx','0');car.style.setProperty('--my','0');});}};
 const show=()=>{hero.classList.add('cfg-on');stage.classList.add('show-cfg');
 if(!film||matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
-hero.classList.add('seq');const tick=()=>{if(done)return;const d=film.duration||2.8;hero.style.setProperty('--drive',Math.min(1,film.currentTime/d).toFixed(3));requestAnimationFrame(tick);};requestAnimationFrame(tick);
+hero.classList.add('seq','wseq');const tick=()=>{if(done)return;const d=film.duration||2.8;hero.style.setProperty('--drive',Math.min(1,film.currentTime/d).toFixed(3));requestAnimationFrame(tick);};requestAnimationFrame(tick);
 const guard=setTimeout(()=>{if(film.paused||film.currentTime===0)finish();},2500);film.addEventListener('playing',()=>clearTimeout(guard),{once:true});
 film.addEventListener('ended',finish);film.addEventListener('error',finish,true);
 const p=film.play();if(p&&p.catch)p.catch(finish);};
@@ -73,3 +73,8 @@ requestAnimationFrame(show);
 (()=>{const hero=document.querySelector('.hero');if(!hero)return;hero.classList.add('in-view');new IntersectionObserver(es=>es.forEach(e=>hero.classList.toggle('in-view',e.isIntersecting))).observe(hero);
 const dust=hero.querySelectorAll('.cfg-dust i');dust.forEach((d,i)=>{const r=(a,b)=>a+Math.random()*(b-a);d.style.cssText=`--x:${r(4,96)}%;--y:${r(0,45)}%;--s:${r(2,4.5)}px;--d:${r(5,9)}s;--w:${-r(0,9)}s;--dx:${r(-30,30)}px`;});
 })();
+/* Headline kinetic type: lines cascade in letter by letter; the key word drops in as an empty outline while the car backs in, and gets "wrapped" with lime film the frame the car parks (CSS: .hero.wseq / .hero.hit). */
+(()=>{const h1=document.querySelector('.hero .copy h1');if(!h1||h1.classList.contains('split'))return;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const wrap=(el,tag,line)=>{const t=el.textContent;el.textContent='';[...t].forEach((c,i)=>{const s=document.createElement(tag);s.textContent=c;s.style.setProperty('--i',i);if(line!=null)s.style.setProperty('--l',line);el.appendChild(s);});el.setAttribute('aria-label',t);};
+if(!reduce){[...h1.children].forEach((sp,li)=>{if(sp.classList.contains('outline')){const g=sp.querySelector('ghost-w');if(g)wrap(g,'l-c');}else wrap(sp,'h-c',li);});h1.setAttribute('aria-label',[...h1.children].map(x=>x.getAttribute('aria-label')||x.textContent).join(' '));}
+h1.classList.add('split');})();
