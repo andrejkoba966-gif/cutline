@@ -73,15 +73,18 @@ const FS=`precision highp float;uniform vec2 uR;uniform float uT,uF,uA,uH,uX0,uX
 float h(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float n(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1.,0.)),u.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),u.x),u.y);}
 float fbm(vec2 p){float v=0.,a=.5;mat2 r=mat2(.8,.6,-.6,.8);for(int i=0;i<5;i++){v+=a*n(p);p=r*p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
-void main(){vec2 c=vec2(gl_FragCoord.x,uR.y-gl_FragCoord.y);float u=(c.x-uX0)/(uX1-uX0);vec2 p=c/uC;float dy=(c.y-uY)/uC;float t=uT;
-vec2 q=vec2(p.x*.5-t*.75,p.y*1.9);vec2 wv=vec2(fbm(q*.7+vec2(0.,t*.35)),fbm(q*.7+vec2(5.2,-t*.3)));float a1=fbm(q+2.2*wv),a2=fbm(q*1.7+3.*wv+vec2(3.1,1.7));
-float wob=(fbm(vec2(p.x*.45-t*1.3,2.3))-.5)*.24;float dc=dy+.08-wob;
-float core=exp(-dc*dc/.0016)*.55;float r1=1.-abs(2.*a1-1.),r2=1.-abs(2.*a2-1.);float ex=mix(7.,12.,uH);
-float wisp=.75*pow(r1,ex)*exp(-dc*dc/.09)+.55*pow(r2,ex+3.)*exp(-(dc+.06)*(dc+.06)/.22);
-float r3=1.-abs(2.*fbm(vec2(p.x*.9-t*.8,p.y*1.25)+1.6*wv+7.3)-1.);float tend=pow(r3,mix(22.,30.,uH))*exp(-(dc-.14)*(dc-.14)/.16);float glow=exp(-dc*dc/(dc<0.?.22:.3))*.5+exp(-dc*dc/(dc<0.?1.1:1.4))*.24;float smoke=smoothstep(.42,.88,a1)*exp(-(dc+.12)*(dc+.12)/.4)*.7;
-float fr=smoothstep(uF+.03,uF-.15,u);float ends=smoothstep(-.03,.08,u)*smoothstep(1.1,.92,u);float hd=exp(-pow((u-uF)/.05,2.))*exp(-dc*dc/.35)*step(u,1.06);
-float ef=smoothstep(0.,uR.x*.06,c.x)*smoothstep(0.,uR.x*.06,uR.x-c.x)*smoothstep(0.,uR.y*.12,c.y)*smoothstep(0.,uR.y*.12,uR.y-c.y);float A=fr*ends*uA*ef;vec3 lime=vec3(.78,1.,.06),hot=vec3(.97,1.,.84);
-vec3 col=(lime*(glow*(1.-.6*uH)+smoke*(1.-.5*uH)+hd*.6)+hot*(core*(.8-.4*uH)+wisp*.85+tend*.6+hd*.4))*A*.8;col=1.-exp(-col*1.7);
+void main(){vec2 c=vec2(gl_FragCoord.x,uR.y-gl_FragCoord.y);float u=(c.x-uX0)/(uX1-uX0);vec2 p=c/uC;float dy=(c.y-uY)/uC;float t=uT,age=uH;
+float fr=smoothstep(uF+.04,uF-.2,u);float ends=smoothstep(-.04,.1,u)*smoothstep(1.06,.9,u);
+float ef=smoothstep(0.,uR.x*.06,c.x)*smoothstep(0.,uR.x*.06,uR.x-c.x)*smoothstep(0.,uR.y*.1,c.y)*smoothstep(0.,uR.y*.1,uR.y-c.y);
+float L=0.;for(int k=0;k<3;k++){float fk=float(k),j=floor(t*11.+fk*3.7);
+float y=(fbm(vec2(p.x*1.05+fk*7.3,j*.37))-.5)*.6+(n(vec2(p.x*7.+fk*11.,j))-.5)*.14-.06*fk;float d=dy-y,w=.012+.007*fk;
+float seg=smoothstep(.32,.62,n(vec2(p.x*1.4+fk*5.,j*1.7)));L+=(exp(-d*d/(w*w))*(1.-.3*fk)+exp(-d*d/.02)*.22)*seg;}
+float bj=floor(t*9.)*.13;float br=pow(1.-abs(2.*fbm(vec2(p.x*2.3+bj,dy*1.3-t*.5))-1.),16.)*smoothstep(.05,-.35,dy)*exp(-(dy+.3)*(dy+.3)/.18);L+=br*.7;
+float glw=exp(-(dy+.04)*(dy+.04)/.07)*.4+exp(-(dy+.15)*(dy+.15)/.45)*.16;
+vec2 sp=vec2(p.x*.7,dy*1.15+t*.42);vec2 q=vec2(fbm(sp*1.2+vec2(0.,t*.12)),fbm(sp*1.2+vec2(4.1,-t*.1)));float sm=fbm(sp*1.15+1.6*q);
+float thr=.42+age*.3;float dens=smoothstep(thr-.05,thr+.45,sm);float rise=age*1.7;float band=exp(-pow(dy+.3+rise,2.)/(.22+age*.9))*smoothstep(.35,-.1,dy+rise*.5);
+float sA=smoothstep(0.,.12,age)*(1.-smoothstep(.5,1.,age));float smoke=dens*band*sA;
+vec3 lime=vec3(.78,1.,.06),hot=vec3(.96,1.,.82);vec3 col=(lime*(glw*uA*fr+smoke*.75)+hot*L*uA*fr)*ends*ef*.85;col=1.-exp(-col*1.7);
 gl_FragColor=vec4(col,max(col.g,max(col.r,col.b)));}`;
 const sh=(t,src)=>{const o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return gl.getShaderParameter(o,gl.COMPILE_STATUS)?o:null;};
 const vsh=sh(gl.VERTEX_SHADER,'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'),fsh=sh(gl.FRAGMENT_SHADER,FS);if(!vsh||!fsh){cv.remove();return;}
@@ -90,7 +93,7 @@ const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.
 const U={};['uR','uT','uF','uA','uH','uX0','uX1','uY','uC'].forEach(k=>U[k]=gl.getUniformLocation(pr,k));
 const mctx=document.createElement('canvas').getContext('2d');let G=null,dpr=1,run=0;
 const layout=()=>{dpr=Math.min(devicePixelRatio||1,1.5);const cr0=document.querySelector('.cfg-car'),cr=copy.getBoundingClientRect(),orr=out.getBoundingClientRect(),wr=(w||out).getBoundingClientRect(),cs=getComputedStyle(w||out),fs=parseFloat(cs.fontSize),bs=getComputedStyle(out,'::before'),lw=parseFloat(bs.width)||0,rr=parseFloat(bs.right)||0;
-const sR=orr.right-rr,sL=sR-lw,x0=Math.min(sL,wr.left)-.9*fs,x1=wr.right+.9*fs,y0=wr.top-1.9*fs,y1=wr.bottom+.6*fs;
+const sR=orr.right-rr,sL=sR-lw,x0=Math.min(sL,wr.left)-.9*fs,x1=wr.right+.9*fs,y0=wr.top-2.6*fs,y1=wr.bottom+.6*fs;
 cv.style.left=(x0-cr.left)+'px';cv.style.top=(y0-cr.top)+'px';cv.style.width=(x1-x0)+'px';cv.style.height=(y1-y0)+'px';cv.width=Math.max(1,Math.round((x1-x0)*dpr));cv.height=Math.max(1,Math.round((y1-y0)*dpr));gl.viewport(0,0,cv.width,cv.height);
 mctx.font=`${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;const m=mctx.measureText((w&&w.dataset.t)||out.textContent),fa=m.fontBoundingBoxAscent||fs*.9,fd=m.fontBoundingBoxDescent||fs*.25,aa=m.actualBoundingBoxAscent||fs*.72,base=wr.top+(wr.height-(fa+fd))/2+fa,capT=base-aa;
 G={x0:(sL-.45*fs-x0)*dpr,x1:(wr.right+.1*fs-x0)*dpr,y:(capT-y0)*dpr,c:aa*dpr};};
@@ -99,8 +102,8 @@ const clear=()=>{gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);};
 const draw=(T,f,a,th)=>{gl.uniform2f(U.uR,cv.width,cv.height);gl.uniform1f(U.uT,T);gl.uniform1f(U.uF,f);gl.uniform1f(U.uA,a);gl.uniform1f(U.uH,th);gl.uniform1f(U.uX0,G.x0);gl.uniform1f(U.uX1,G.x1);gl.uniform1f(U.uY,G.y);gl.uniform1f(U.uC,G.c);gl.drawArrays(gl.TRIANGLES,0,3);};
 const strike=()=>{if(!G)return;const id=++run,t0=performance.now(),D=5600,off=Math.random()*50;out.classList.add('charged');
 const step=t=>{if(id!==run)return;const s=(t-t0)/1000,k=s*1000/D;if(k>=1){clear();out.classList.remove('charged');return;}
-const fr=Math.min(1,s/1.6),front=(1-Math.cos(Math.PI*fr))/2*1.14-.04,amp=Math.min(1,s/.7)*(k<.45?1:Math.pow(Math.max(0,1-(k-.45)/.55),1.4)),thin=Math.min(1,Math.max(0,(k-.4)/.45));
-draw(s*.5+off,front,amp,thin);if(k>.75)out.classList.remove('charged');requestAnimationFrame(step);};requestAnimationFrame(step);};
+const fr=Math.min(1,s/1.1),front=(1-Math.cos(Math.PI*fr))/2*1.16-.05,amp=Math.min(1,s/.25)*(s<1.6?1:Math.pow(Math.max(0,1-(s-1.6)/1.6),1.5)),thin=k;
+draw(s+off,front,amp,thin);if(k>.75)out.classList.remove('charged');requestAnimationFrame(step);};requestAnimationFrame(step);};
 /* one rhythm: the light runs down the speed line (CSS .kick, 1.6 s), hits the word at 42 % and the energy blooms from that impact */
 const IMPACT=.42*1600;let timer=0,kt=0;const kick=()=>{if(!hero.classList.contains('in-view')||document.hidden)return;layout();hero.classList.remove('kick');void hero.offsetWidth;hero.classList.add('kick');clearTimeout(kt);kt=setTimeout(strike,IMPACT);};
 document.addEventListener('cutline:car-arrived',()=>{kick();clearInterval(timer);timer=setInterval(kick,10000);});})();
